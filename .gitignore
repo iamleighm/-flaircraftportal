@@ -7,6 +7,7 @@ node_modules/
 
 # Stencil CLI build output
 dist/
+assets/dist/
 
 # Local configuration files
 config.json
