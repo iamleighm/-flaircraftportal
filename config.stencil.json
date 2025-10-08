@@ -1,0 +1,11 @@
+{
+  "customLayouts": {
+    "brand": {},
+    "category": {},
+    "page": {},
+    "product": {}
+  },
+  "normalStoreUrl": "https://flaircraft-portal-c3.mybigcommerce.com",
+  "port": "4000",
+  "packageManager": "npm"
+}
