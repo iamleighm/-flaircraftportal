@@ -1,1 +1,32 @@
-node_modules
+# Node modules
+node_modules/
+
+# Stencil CLI generated files
+.stencil/
+.env
+
+# Stencil CLI build output
+dist/
+
+# Local configuration files
+config.json
+
+# Log files
+*.log
+
+# Editor/IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# macOS specific files
+.DS_Store
+
+# npm debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Stencil CLI upload artifacts
+*.zip
