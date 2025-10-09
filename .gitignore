@@ -24,12 +24,6 @@ Thumbs.db # Windows specific
 # Local configuration files
 config.json.local # If you use a local config file not intended for production
 
-
-
-
-
-
-
-
-
-
+# Post stencil build files
+parsed/
+stencil-context/
