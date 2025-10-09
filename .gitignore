@@ -1,34 +1,35 @@
-# Node modules
+# Stencil CLI specific files
+.stencil
+.stencil-cli
+config.stencil.json
+secrets.stencil.json
+
+# Node.js dependencies
 node_modules/
 
-# Stencil CLI generated files
-.stencil/
-.env
-
-# Stencil CLI build output
-assets/
+# Build artifacts and temporary files
 assets/dist/
+assets/css-artifacts
+assets/js/bundle.js
+vendor/bundle
+bundle.zip
+.bundle
+*.js.map
+*.zip
+.idea/
+*.log
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
 
 # Local configuration files
-config.json
+config.json.local # If you use a local config file not intended for production
 
-# Log files
-*.log
 
-# Editor/IDE specific files
-.idea/
-.vscode/
-*.sublime-project
-*.sublime-workspace
 
-# macOS specific files
-.DS_Store
 
-# npm debug logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
-# Stencil CLI upload artifacts
-*.zip
- 
+
+
+
+
+
