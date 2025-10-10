@@ -10,21 +10,60 @@
     {{/each}}
 </div>
 {{/if}}
-<header class="header" role="banner">
+<header class="header container" role="banner">
     <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
     </a>
     {{> components/common/navigation}}
 
-    {{#if page_type '===' 'default'}}
-        <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
-            {{> components/common/store-logo}}
-        </h1>
-    {{else}}
-        <div class="header-logo header-logo--{{theme_settings.logo-position}}">
-            {{> components/common/store-logo}}
+    <div class="header-logo-quickSearch-account">
+        {{#if page_type '===' 'default'}}
+            <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
+                {{> components/common/store-logo}}
+            </h1>
+        {{else}}
+            <div class="header-logo header-logo--{{theme_settings.logo-position}}">
+                {{> components/common/store-logo}}
+            </div>
+        {{/if}}
+
+        <div class="dropdown dropdown--quickSearch" id="quickSearch">
+            {{> components/common/quick-search name='nav-quick-search'}}
         </div>
-    {{/if}}
+
+        <div class="navUser-item navUser-item--account">
+            {{#if customer}}
+                <a class="navUser-action"
+                    href="{{urls.account.index}}"
+                    aria-label="{{lang 'common.account'}}"
+                >
+                    {{lang 'common.account'}}
+                </a>
+                <a class="navUser-action"
+                    href="{{urls.auth.logout}}"
+                    aria-label="{{lang 'common.logout'}}"
+                >
+                    {{lang 'common.logout'}}
+                </a>
+            {{else}}
+                <a class="navUser-action"
+                    href="{{urls.auth.login}}"
+                    aria-label="{{lang 'common.login'}}"
+                >
+                    {{lang 'common.login'}}
+                </a>
+                {{#if settings.account_creation_enabled}}
+                    <span class="navUser-or">{{lang 'common.or'}}</span>
+                    <a class="navUser-action"
+                        href="{{urls.auth.create_account}}"
+                        aria-label="{{lang 'common.sign_up'}}"
+                    >
+                        {{lang 'common.sign_up'}}
+                    </a>
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
     <div class="navPages-container" id="menu" data-menu>
         {{> components/common/navigation-menu}}
     </div>

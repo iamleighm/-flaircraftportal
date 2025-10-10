@@ -269,12 +269,19 @@
 }
 
 .dropdown--quickSearch {
-    background-color: $dropdown--quickSearch-backgroundColor;
-    display: none;
+    background-color: transparent;
+    display: block;
+    position: relative;
     padding: spacing("single") 0;
+    left: 0;
+    outline: none;
+    right: 0;
+    max-width: fit-content;
+    z-index: zIndex("high");
+    top: 0 !important;
 
     @include breakpoint("small") {
-        padding: spacing("double");
+        padding: 0;
     }
 
     &.is-open {
