@@ -398,9 +398,7 @@
     "afterpay-button-color": "black-mint",
     "amazon-button-color": "Gold",
     "masterpass-button-color": "black",
-    "paymentbuttons-provider-sorting": [
-
-    ]
+    "paymentbuttons-provider-sorting": []
   },
   "read_only_files": [
     "/assets/scss/components/citadel",
@@ -438,8 +436,7 @@
           "home_garden"
         ]
       },
-      "images": {
-      },
+      "images": {},
       "settings": {
         "channels": [
           {
@@ -628,7 +625,7 @@
         "alert-color-alt": "#ffffff",
         "storeName-color": "#333333",
         "body-bg": "#ffffff",
-        "header-backgroundColor": "#ffffff",
+        "header-backgroundColor": "#FFFFFF",
         "footer-backgroundColor": "#ffffff",
         "navUser-color": "#333333",
         "navUser-color-hover": "#757575",
@@ -796,9 +793,7 @@
         "afterpay-button-color": "black-mint",
         "amazon-button-color": "Gold",
         "masterpass-button-color": "black",
-        "paymentbuttons-provider-sorting": [
-
-        ]
+        "paymentbuttons-provider-sorting": []
       }
     },
     {

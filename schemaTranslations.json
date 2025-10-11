@@ -1956,25 +1956,6 @@
     "pl": "Pokaż ikony mediów społecznościowych",
     "ja": "SNSアイコンを表示"
   },
-    "i18n.ShowSocialMediaIconsTest": {
-    "default": "Show social media icons test",
-    "fr": "Afficher les icônes de médias sociaux",
-    "it": "Mostra icone dei social media",
-    "zh": "显示社交媒体图标",
-    "de": "Social-Media-Symbole anzeigen",
-    "es": "Mostrar iconos de las redes sociales",
-    "nl": "Pictogrammen voor sociale media weergeven",
-    "pt": "Exibir ícones de redes sociais",
-    "pt-BR": "Exibir ícones de redes sociais",
-    "sv": "Visa sociala medie-ikoner",
-    "es-MX": "Mostrar íconos de redes sociales",
-    "es-419": "Mostrar íconos de redes sociales",
-    "da": "Vis ikoner for sociale medier",
-    "no": "Vis ikoner for sosiale medier",
-    "ko": "소셜 미디어 아이콘 표시",
-    "pl": "Pokaż ikony mediów społecznościowych",
-    "ja": "SNSアイコンを表示"
-  },
   "i18n.FooterPlacement": {
     "default": "Footer Placement",
     "fr": "Emplacement du pied de page",
