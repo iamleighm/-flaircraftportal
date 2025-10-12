@@ -1,4 +1,9 @@
 <nav class="navUser">
+
+    <div class="navUser-section navUser-section--left">
+        {{{region name="navigation_top_bar_left"}}}
+    </div>
+
     {{#or customer (unless settings.hide_price_from_guests)}}
         {{> components/common/currency-selector}}
     {{/or}}
@@ -8,6 +13,9 @@
     {{/if}}
 
     <ul class="navUser-section navUser-section--alt">
+        <li>
+            {{{region name="navigation_top_bar_right"}}}
+        </li>
         {{#if customer.store_credit.value '>' 0}}
             <li class="navUser-item">
                 <a class="navUser-action navUser-action--storeCredit"
@@ -40,19 +48,6 @@
             </li>
             <li class="navUser-item navUser-item--divider">|</li>
         {{/if}}
-        <!--
-        <li class="navUser-item">
-            <button class="navUser-action navUser-action--quickSearch"
-               type="button"
-               id="quick-search-expand"
-               data-search="quickSearch"
-               aria-controls="quickSearch"
-               aria-label="{{lang 'common.search'}}"
-            >
-                {{lang 'common.search'}}
-            </button>
-        </li>
-        -->
         {{#if settings.gift_certificates_enabled}}
             <li class="navUser-item">
                 <a class="navUser-action"

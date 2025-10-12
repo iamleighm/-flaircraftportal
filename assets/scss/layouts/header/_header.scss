@@ -171,7 +171,7 @@
         font-size: $fontSize-smallest;
         max-width: none;
         overflow: auto;
-        padding: 0 10px;
+        padding: 0 spacing("half");
         white-space: normal;
 
         .header.fixed & {
