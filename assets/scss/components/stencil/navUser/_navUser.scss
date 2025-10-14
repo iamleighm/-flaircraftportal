@@ -69,11 +69,16 @@
     @include breakpoint("medium") {
         position: relative; // 7
     }
-    .navUser-section--left{
-        display: flex;
+    &.navUser-section--left{
+        div[data-layout-id]{
+            display: flex;
+        }
     }
-    .navUser-section--alt{
+    &.navUser-section--alt{
         display: flex;
+        div[data-layout-id]{
+            display: flex;
+        }
     }
     div[data-sub-layout]{
         padding:0 spacing("half");

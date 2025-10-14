@@ -10,13 +10,13 @@
     {{/each}}
 </div>
 {{/if}}
-<header class="header container" role="banner">
+<header class="header" role="banner">
     <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
     </a>
     {{> components/common/navigation}}
 
-    <div class="header-logo-quickSearch-account">
+    <div class="header-logo-quickSearch-account container">
         {{#if page_type '===' 'default'}}
             <h1 class="header-logo header-logo--{{theme_settings.logo-position}}">
                 {{> components/common/store-logo}}
@@ -64,7 +64,7 @@
             {{/if}}
         </div>
     </div>
-    <div class="navPages-container" id="menu" data-menu>
+    <div class="navPages-container container" id="menu" data-menu>
         {{> components/common/navigation-menu}}
     </div>
     {{{region name="header_navigation_bottom--global"}}}
