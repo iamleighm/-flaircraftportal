@@ -1614,6 +1614,25 @@
     "pl": "Kolor tekstu logo",
     "ja": "ロゴの文字の色"
   },
+  "i18n.TopbarNavigation": {
+    "default": "Topbar navigation",
+    "fr": "Navigation de la barre supérieure",
+    "it": "Navigazione della barra superiore",
+    "zh": "顶部导航",
+    "de": "Oberste Navigationsleiste",
+    "es": "Navegación de la barra superior",
+    "nl": "Bovenste navigatie",
+    "pt": "Navegação da barra superior",
+    "pt-BR": "Navegação da barra superior",
+    "sv": "Topplistenavigering",
+    "es-MX": "Navegación de la barra superior",
+    "es-419": "Navegación de la barra superior",
+    "da": "Topbar-navigation",
+    "no": "Topptekstnavigasjon",
+    "ko": "상단 바 탐색",
+    "pl": "Nawigacja górnego paska",
+    "ja": "トップバーのナビゲーション"
+  },
   "i18n.UtilityNavigation": {
     "default": "Utility navigation",
     "fr": "Menu de navigation",
@@ -1708,6 +1727,25 @@
     "ko": "장바구니 드롭다운 배경",
     "pl": "Tło rozwijanego koszyka",
     "ja": "カートのドロップダウンの背景"
+  },
+    "i18n.CartTopbarBackground": {
+    "default": "Top Bar background",
+    "fr": "Arrière-plan de la barre supérieure",
+    "it": "Sfondo della barra superiore",
+    "zh": "顶部栏背景",
+    "de": "Hintergrund der oberen Leiste",
+    "es": "Fondo de la barra superior",
+    "nl": "Achtergrond van de bovenste balk",
+    "pt": "Plano de fundo da barra superior",
+    "pt-BR": "Plano de fundo da barra superior",
+    "sv": "Bakgrund på kundvagnens övre fält",
+    "es-MX": "Fondo de la barra superior",
+    "es-419": "Fondo de la barra superior",
+    "da": "Baggrund til kurvens øverste felt",
+    "no": "Bakgrunn på handlekurvens øverste felt",
+    "ko": "장바구니 상단 바 배경",
+    "pl": "Tło górnego paska koszyka",
+    "ja": "カートのトップバーの背景"
   },
   "i18n.CartDropdownBorder": {
     "default": "Cart dropdown border",

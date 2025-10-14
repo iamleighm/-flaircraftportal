@@ -23,9 +23,23 @@
     top: 26px; // 2
     width: 100%; // 4
     z-index: zIndex("lowest"); // 5.
+    background-color: stencilColor("navUser-topbar-backgroundColor");
     
+    .topbar_nav_link,
+    .navUser-item--cart{
+        a,
+        a.navUser-action{
+            color: stencilColor("navUser-topbar-color");
+            text-decoration: none;
+            &:hover{
+                color: stencilColor("navUser-topbar-color-hover");
+                text-decoration: underline;
+            }
+        }
+    }
+
     @include breakpoint("medium") {
-        padding: 0 0;
+        padding: 6px 0;
         position: relative;
         right: auto;
         top: auto;
@@ -221,7 +235,8 @@
 
 .navUser-item-cartLabel {
     display: none;
-
+    font-weight: 400;
+    text-transform: initial;
     @include breakpoint("small") {
         display: inline;
     }
@@ -294,6 +309,11 @@
     z-index: zIndex("high");
     top: 0 !important;
 
+    .container-fluid{
+        width: 600px;
+        max-width: 100%;
+    }
+
     @include breakpoint("small") {
         padding: 0;
     }
@@ -309,7 +329,7 @@
 
     .form {
         margin: auto;
-        max-width: 30rem;
+        max-width: none;
     }
 
     .form,

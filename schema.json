@@ -713,6 +713,25 @@
       },
       {
         "type": "heading",
+        "content": "i18n.TopbarNavigation"
+      },
+      {
+        "type": "color",
+        "label": "i18n.CartTopbarBackground",
+        "id": "navUser-topbar-backgroundColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.TextColor",
+        "id": "navUser-topbar-color"
+      },
+      {
+        "type": "color",
+        "label": "i18n.TextHoverColor",
+        "id": "navUser-topbar-color-hover"
+      },
+      {
+        "type": "heading",
         "content": "i18n.UtilityNavigation"
       },
       {

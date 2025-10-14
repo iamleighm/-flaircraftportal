@@ -25,6 +25,12 @@
 
 .quickSearchResults {
     margin-top: spacing("single");
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #fff;
+    color: stencilColor("navUser-topbar-color");
 
     @include breakpoint("medium") {
         margin-top: 0;
