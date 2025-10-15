@@ -44,7 +44,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
     "expose-loader": "^4.0.0",
-    "grunt": "^1.5.3",
+    "grunt": "^1.6.1",
     "grunt-cli": "^1.4.3",
     "grunt-eslint": "^24.3.0",
     "grunt-run": "^0.8.1",

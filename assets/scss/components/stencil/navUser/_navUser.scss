@@ -24,7 +24,8 @@
     width: 100%; // 4
     z-index: zIndex("lowest"); // 5.
     background-color: stencilColor("navUser-topbar-backgroundColor");
-    
+    display:none;
+
     .topbar_nav_link,
     .navUser-item--cart{
         a,
@@ -45,6 +46,7 @@
         top: auto;
         transform: none;
         z-index: zIndex("high");
+        display:block;
     }
 
     .dropdown-menu {
@@ -120,12 +122,6 @@
         @include square(8px);
         margin: -1px 0 0 spacing("eighth");
     }
-
-    svg {
-        fill: stencilColor("navUser-color");
-        stroke: stencilColor("navUser-color");
-        transition: all 0.15s ease;
-    }
 }
 
 .navUser-action--currencySelector + .dropdown-menu,
@@ -177,6 +173,29 @@
             font-size: rem-calc(25px);
             margin-top: rem-calc(8px);
             padding-left: rem-calc(2px);
+        }
+    }
+    .navUser-action-mobile{
+        display: block;
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        svg {
+            display:inline;
+            width: 20px;
+            height: 20px;
+            fill: stencilColor("navUser-color");
+            stroke: stencilColor("navUser-color");
+            transition: all 0.15s ease;
+        }
+        @include breakpoint("medium") {
+            display: none !important;
+        }
+    }
+    .navUser-action-desktop{
+        display: none;
+        @include breakpoint("medium") {
+            display: block !important;
         }
     }
 }
@@ -251,6 +270,9 @@
 }
 
 .navUser-item--account {
+    display: block;
+    position: absolute;
+    right: 20px;
     .navUser-or {
         + .navUser-action {
             margin-right: -0.5rem; // 1
@@ -259,6 +281,11 @@
 
     .navUser-action {
         display: inline-block;
+    }
+
+    @include breakpoint("medium") {
+        position: relative;
+        right: auto;
     }
 }
 
@@ -310,13 +337,24 @@
     top: 0 !important;
 
     .container-fluid{
-        width: 600px;
-        max-width: 100%;
+       display: none;
     }
-
     @include breakpoint("small") {
         padding: 0;
     }
+    @include breakpoint("medium") {
+        .container-fluid{
+            width: 400px;
+            max-width: 100%;
+            display:block;
+        }
+    }
+    @include breakpoint("large") {
+        .container-fluid{
+            width: 600px;
+        }
+    }
+  
 
     &.is-open {
         display: block;
@@ -373,7 +411,7 @@
 .countPill {
     background-color: stencilColor("navUser-indicator-backgroundColor");
     border-radius: 50%;
-    color: color("whites", "bright");
+    color: color("greys", "darker");
     display: none;
     font-size: fontSize("tiny");
     font-weight: fontWeight("bold");

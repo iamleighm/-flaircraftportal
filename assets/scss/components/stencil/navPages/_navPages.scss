@@ -44,6 +44,7 @@
     position: absolute;
     right: 0;
     z-index: zIndex("lower");
+    padding: 0 !important;
 
     @include breakpoint("medium") {
         background: transparent;
@@ -51,6 +52,7 @@
         height: auto;
         padding: 0;
         position: relative;
+        padding: 0 $container-padding;
     }
 
     &.is-open {

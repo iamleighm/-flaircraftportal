@@ -33,34 +33,51 @@
 
         <div class="navUser-item navUser-item--account">
             {{#if customer}}
-                <a class="navUser-action"
+                <span class="navUser-action-desktop">
+                    <a class="navUser-action"
+                        href="{{urls.account.index}}"
+                        aria-label="{{lang 'common.account'}}"
+                    >
+                        {{lang 'common.account'}}
+                    </a>
+                    <a class="navUser-action"
+                        href="{{urls.auth.logout}}"
+                        aria-label="{{lang 'common.logout'}}"
+                    >
+                        {{lang 'common.logout'}}
+                    </a>
+                </span>
+                <a class="navUser-action navUser-action-mobile"
                     href="{{urls.account.index}}"
                     aria-label="{{lang 'common.account'}}"
                 >
-                    {{lang 'common.account'}}
-                </a>
-                <a class="navUser-action"
-                    href="{{urls.auth.logout}}"
-                    aria-label="{{lang 'common.logout'}}"
-                >
-                    {{lang 'common.logout'}}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"/></svg>
                 </a>
             {{else}}
-                <a class="navUser-action"
+                <span class="navUser-action-desktop">
+                    <a class="navUser-action"
+                        href="{{urls.auth.login}}"
+                        aria-label="{{lang 'common.login'}}"
+                    >
+                        {{lang 'common.login'}}
+                    </a>
+
+                    {{#if settings.account_creation_enabled}}
+                        <span class="navUser-or">{{lang 'common.or'}}</span>
+                        <a class="navUser-action"
+                            href="{{urls.auth.create_account}}"
+                            aria-label="{{lang 'common.sign_up'}}"
+                        >
+                            {{lang 'common.sign_up'}}
+                        </a>
+                    {{/if}}
+                </span>
+                <a class="navUser-action navUser-action-mobile"
                     href="{{urls.auth.login}}"
                     aria-label="{{lang 'common.login'}}"
                 >
-                    {{lang 'common.login'}}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"/></svg>
                 </a>
-                {{#if settings.account_creation_enabled}}
-                    <span class="navUser-or">{{lang 'common.or'}}</span>
-                    <a class="navUser-action"
-                        href="{{urls.auth.create_account}}"
-                        aria-label="{{lang 'common.sign_up'}}"
-                    >
-                        {{lang 'common.sign_up'}}
-                    </a>
-                {{/if}}
             {{/if}}
         </div>
     </div>
