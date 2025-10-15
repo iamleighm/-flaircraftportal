@@ -338,15 +338,27 @@
     }
 
     .form-input {
-        font-size: fontSize("small");
+        font-size: fontSize("base");
         height: unset;
+        padding:5px 20px;
+        color:stencilColor("color-primaryDarker");
+        height: 40px;
+        &::placeholder {
+            color: stencilColor("color-primaryDarker");
+        }
+        &:focus{
+            outline:none !important;
+        }
     }
 
     .productGrid {
         padding: spacing("single") 0 0;
-
+        margin: 0;
         @include breakpoint("small") {
             padding: spacing("double") 0 0;
+        }
+        .product{
+            width: grid-calc(4, $total-columns);
         }
     }
 }
