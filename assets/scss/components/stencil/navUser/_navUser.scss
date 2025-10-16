@@ -28,8 +28,11 @@
 
     .topbar_nav_link,
     .navUser-item--cart{
+        font-size: 12px;
+        letter-spacing: 0.7px;
         a,
         a.navUser-action{
+            text-transform: uppercase;
             color: stencilColor("navUser-topbar-color");
             text-decoration: none;
             &:hover{
@@ -97,7 +100,9 @@
         }
     }
     div[data-sub-layout]{
-        padding:0 spacing("half");
+        padding:0 0 0 spacing("half") ;
+        flex-direction: row;
+        gap: 20px;
     }
 }
 
@@ -255,8 +260,10 @@
 
 .navUser-item-cartLabel {
     display: none;
+    font-size: 12px;
+    letter-spacing: 0.7px;
     font-weight: 400;
-    text-transform: initial;
+    text-transform: uppercase;
     @include breakpoint("small") {
         display: inline;
     }
@@ -289,6 +296,7 @@
     @include breakpoint("medium") {
         position: relative;
         right: auto;
+        top:0;
     }
     @include breakpoint("large") {
         min-width: 250px;
