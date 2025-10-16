@@ -32,6 +32,10 @@ export default function () {
             stencilDropDown.hide($container);
         }
         */
+        if ($(e.target).closest('.navUser-action--quickSearch').length === 0 && window.innerWidth <= 800) {
+            stencilDropDown.hide($container);
+        }
+        
     };
 
     // stagger searching for 1200ms after last input

@@ -176,10 +176,10 @@
         }
     }
     .navUser-action-mobile{
-        display: block;
-        display: flex !important;
+        display: flex;
         justify-content: center;
         align-items: center;
+        padding:0px 5px;
         svg {
             display:inline;
             width: 20px;
@@ -196,6 +196,7 @@
         display: none;
         @include breakpoint("medium") {
             display: block !important;
+            min-width: 155px;
         }
     }
 }
@@ -221,11 +222,11 @@
 
     .dropdown-menu {
         max-width: remCalc(320px);
-
+        min-width: remCalc(320px);
         &.is-open {
             left: auto !important; // 7
             right: remCalc(5px); // 7
-            top: auto !important; // 7
+            top: 27px !important; // 7
             @include breakpoint("medium") {
                 right: 0; // 7
             }
@@ -270,9 +271,11 @@
 }
 
 .navUser-item--account {
-    display: block;
+    display: flex;
     position: absolute;
-    right: 20px;
+    right: 10px;
+    top:20px;
+
     .navUser-or {
         + .navUser-action {
             margin-right: -0.5rem; // 1
@@ -286,6 +289,11 @@
     @include breakpoint("medium") {
         position: relative;
         right: auto;
+    }
+    @include breakpoint("large") {
+        min-width: 250px;
+        text-align: right;
+        justify-content: flex-end;
     }
 }
 
@@ -326,7 +334,7 @@
 
 .dropdown--quickSearch {
     background-color: transparent;
-    display: block;
+    display: none;
     position: relative;
     padding: spacing("single") 0;
     left: 0;
@@ -336,13 +344,11 @@
     z-index: zIndex("high");
     top: 0 !important;
 
-    .container-fluid{
-       display: none;
-    }
     @include breakpoint("small") {
         padding: 0;
     }
     @include breakpoint("medium") {
+         display: block;
         .container-fluid{
             width: 400px;
             max-width: 100%;
@@ -358,11 +364,18 @@
 
     &.is-open {
         display: block;
-        left: 0 !important; // 1
-        outline: none;
-        right: 0 !important; // 1
-        width: 100% !important;
-        z-index: zIndex("high");
+        position: absolute;
+        left: 0;
+        width: 100%;
+        min-width: calc(100% - 35px);
+        padding: 10px;
+        @include breakpoint("medium") {
+            left: 0;
+            outline: none;
+            right: 0; 
+            width: 100%;
+            z-index: zIndex("high");
+        }
     }
 
     .form {
@@ -396,7 +409,7 @@
             padding: spacing("double") 0 0;
         }
         .product{
-            width: grid-calc(4, $total-columns);
+            width: grid-calc(6, $total-columns);
         }
     }
 }

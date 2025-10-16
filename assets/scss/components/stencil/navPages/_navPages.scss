@@ -493,6 +493,11 @@
 
         a {
             padding: spacing("half") spacing("single");
+
+            &:focus,
+            &:active{
+                outline:none !important;
+            }
         }
     }
 }
