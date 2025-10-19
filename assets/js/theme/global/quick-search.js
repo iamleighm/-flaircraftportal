@@ -23,7 +23,6 @@ export default function () {
     stencilDropDown.bind($('[data-search="quickSearch"]'), $('#quickSearch'), TOP_STYLING);
 
     stencilDropDownExtendables.onBodyClick = (e, $container) => {
-        e.preventDefault();
         // If the target element has this data tag or one of it's parents, do not close the search results
         // We have to specify `.modal-background` because of limitations around Foundation Reveal not allowing
         // any modification to the background element.
