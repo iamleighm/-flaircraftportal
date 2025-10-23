@@ -5,13 +5,14 @@ import PageManager from './page-manager';
 import Review from './product/reviews';
 import collapsibleFactory from './common/collapsible';
 import ProductDetails from './common/product-details';
+import bulkAddToCart from './global/bulk-add-to-cart';
 import videoGallery from './product/video-gallery';
 import { classifyForm } from './common/utils/form-utils';
 import modalFactory from './global/modal';
 
 export default class Product extends PageManager {
-    constructor(context) {
-        super(context);
+    constructor($scope, context) {
+        super($scope, context);
         this.url = window.location.href;
         this.$reviewLink = $('[data-reveal-id="modal-review-form"]');
         this.$bulkPricingLink = $('[data-reveal-id="modal-bulk-pricing"]');
@@ -35,6 +36,7 @@ export default class Product extends PageManager {
         this.productDetails.setProductVariant();
 
         videoGallery();
+        bulkAddToCart(this.$scope, this.context);
 
         this.bulkPricingHandler();
 

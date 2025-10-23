@@ -230,6 +230,21 @@
             {{#if product.release_date }}
                 <p>{{product.release_date}}</p>
             {{/if}}
+
+            <div>
+                Custom Bulk Add to cart
+                <br>
+                stock_level : {{product.stock_level}}-
+                <br>
+                <script>
+                    //console.log("My Handlebars object:", {{{json product}}});
+                </script>
+                <br>
+                
+             
+               
+            </div>
+
             <form class="form" method="post" action="{{product.cart_url}}" enctype="multipart/form-data"
                   data-cart-item-add>
                 <input type="hidden" name="action" value="add">
