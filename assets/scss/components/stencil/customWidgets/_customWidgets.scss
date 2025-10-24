@@ -1,0 +1,82 @@
+
+/* Three Column Section Widget */
+.widget-template.column-section{
+    &.layout1{
+        .container{
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 3rem;
+            .column-wrapper{
+                width: 100%;
+                text-align: center;
+                .imageurl{
+                    display: block;
+                    margin-bottom: 16px;
+                    img{
+                        width: 100%;
+                        height: auto;
+                    }
+                }
+                .heading-title{
+                    margin: 0 0 40px 0;
+                    position: relative;
+                    &:after {
+                        content: '';
+                        border-top: 1px solid #dddddd;
+                        width: 40%;
+                        display: block;
+                        margin: auto;
+                        bottom: -20px;
+                        position: relative;
+                    }
+                }
+                .description{
+                    margin: 0 0 16px 0;
+                }
+            }
+        }
+    }
+
+    &.layout2{
+        .container{
+
+            .column-wrapper{
+
+                .imageurl{
+
+                    img{
+
+                    }
+                }
+                .heading-title{
+
+                    &:after {
+
+                    }
+                }
+                .description{
+                    
+                }
+            }
+        }
+    }
+}
+
+
+
+@media (max-width: $screen-small) {
+    .widget-template.column-section{
+        .container{
+            flex-direction: column;
+            .column-wrapper{
+                width: 100%;
+                .imageurl{
+                    img{
+                        max-width: 300px;
+                    }
+                }
+            }
+        }
+    }
+}

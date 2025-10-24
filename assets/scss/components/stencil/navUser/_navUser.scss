@@ -408,9 +408,6 @@
         &::placeholder {
             color: stencilColor("color-primaryDarker");
         }
-        &:focus{
-            outline:none !important;
-        }
     }
 
     .productGrid {

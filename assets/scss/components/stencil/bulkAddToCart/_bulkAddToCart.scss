@@ -8,13 +8,6 @@
         [data-product-option-change]{
             display: block !important;
         }
-        input,
-        button{
-            &:focus,
-            &:active{
-                outline:none !important;
-            }
-        }
         .form-option-wrapper{
             &.loader:before{
                 content: '';
