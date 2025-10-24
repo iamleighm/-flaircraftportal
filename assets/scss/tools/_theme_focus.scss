@@ -16,14 +16,14 @@ details,
 [tabindex]:not([tabindex="-1"]),
 [contenteditable="true"] {        
     &:focus {
-        outline: $outline-width $outline-style $outline-color !important;
-        outline-offset: $outline-offset !important;        
+        //outline: $outline-width $outline-style $outline-color !important;
+        //outline-offset: $outline-offset !important;        
     }
 }
 
 label {
     input:focus + & {
-        outline: $outline-width $outline-style $outline-color !important;
-        outline-offset: $outline-offset !important;        
+        //outline: $outline-width $outline-style $outline-color !important;
+        //outline-offset: $outline-offset !important;        
     }
 }

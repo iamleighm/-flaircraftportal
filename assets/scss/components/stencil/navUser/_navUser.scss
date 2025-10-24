@@ -185,6 +185,9 @@
         justify-content: center;
         align-items: center;
         padding:0px 5px;
+        &.navUser-action--quickSearch{
+            display: none !important;
+        }
         svg {
             display:inline;
             width: 20px;

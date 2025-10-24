@@ -105,6 +105,34 @@
 .navPages-list {
     margin: 0;
 
+    @media (min-width: 801px) {
+        .navPages-item:hover{
+            &:has(.has-subMenu){
+                .navPage-subMenu{
+                    display: block;
+                }
+            }
+            .navPage-subMenu{
+                padding:10px !important;
+                .navPage-subMenu-list{
+                    .navPage-subMenu-item{
+                        width: 100%;
+                        .navPage-subMenu-action{
+                            padding: 10px 0;
+                            margin-bottom: 0px;
+                        }
+                        &:last-child{
+                            .navPage-subMenu-action{
+                                border-bottom: 0;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+ 
     @include breakpoint("medium") {
         display: inline-block;
         float: none;
@@ -469,6 +497,42 @@
     }
 }
 
+.dropdown--quickSearch,
+.navPages-quickSearch{
+    &.searching{
+        .form-field:has(#nav-menu-quick-search),
+        .form-field:has(#nav-quick-search){
+            position: relative;
+            &:after{
+                content:'';
+                display: block;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 9px;
+                margin: auto;
+                height: 25px;
+                width: 25px;
+                border: 2px solid #dddddd;
+                border-bottom-color: transparent;
+                border-radius: 50%;
+                display: inline-block;
+                box-sizing: border-box;
+                animation: rotation 1s linear infinite;
+                z-index: 9;
+                @keyframes rotation {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            }
+        }
+    }
+}
+    
 
 //
 // NavPages user section for mobile nav panel
@@ -493,11 +557,6 @@
 
         a {
             padding: spacing("half") spacing("single");
-
-            &:focus,
-            &:active{
-                outline:none !important;
-            }
         }
     }
 }

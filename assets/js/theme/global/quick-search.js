@@ -41,6 +41,7 @@ export default function () {
     // stagger searching for 1200ms after last input
     const debounceWaitTime = 1200;
     const doSearch = _.debounce((searchQuery) => {
+        document.querySelectorAll('.navPages-quickSearch,.dropdown--quickSearch').forEach(element => element.classList.add('searching'));
         utils.api.search.search(searchQuery, { template: 'search/quick-results' }, (err, response) => {
             if (err) {
                 return false;
@@ -55,6 +56,7 @@ export default function () {
                     role: 'status',
                     'aria-live': 'polite',
                 });
+                document.querySelectorAll('.navPages-quickSearch,.dropdown--quickSearch').forEach(element => element.classList.remove('searching'));
             } else {
                 const $quickSearchAriaMessage = $quickSearchResultsCurrent.next();
                 $quickSearchAriaMessage.addClass('u-hidden');
@@ -67,6 +69,7 @@ export default function () {
                 setTimeout(() => {
                     $quickSearchAriaMessage.removeClass('u-hidden');
                 }, 100);
+                document.querySelectorAll('.navPages-quickSearch,.dropdown--quickSearch').forEach(element => element.classList.remove('searching'));
             }
         });
     }, debounceWaitTime);

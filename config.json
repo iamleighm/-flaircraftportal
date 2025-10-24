@@ -638,7 +638,7 @@
         "navUser-indicator-backgroundColor": "#FFFFFF",
         "navPages-color": "#333333",
         "navPages-color-hover": "#757575",
-        "navPages-subMenu-backgroundColor": "#e5e5e5",
+        "navPages-subMenu-backgroundColor": "#F4DFD3",
         "navPages-subMenu-separatorColor": "#cccccc",
         "dropdown--quickSearch-backgroundColor": "#e5e5e5",
         "dropdown--wishList-backgroundColor": "#ffffff",

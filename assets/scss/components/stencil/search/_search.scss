@@ -25,17 +25,20 @@
 
 .quickSearchResults {
     margin-top: 0;
-    width: 100vw;
+    width: 100%;
     min-width: 100%;
-    position: absolute;
-    left: 0;
-    top: 100%;
+    position: relative;
     background-color: #ffffff;
     color: stencilColor("navUser-topbar-color");
 
     @include breakpoint("medium") {
         margin-top: 0;
         width: 100%;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        max-height: 500px;
+        overflow: auto;
     }
 
     .modal-close {
@@ -98,6 +101,7 @@
     font-size: fontSize("largest");
     margin: spacing("single") 0 0;
     text-align: center;
+    color: stencilColor("color-primaryDarker");
 }
 
 .search-nav {
