@@ -10,7 +10,9 @@
 
 .body {
     margin-bottom: spacing("double") * 2;
-    margin-top: spacing("single"); // 1
+    &:not(:has(.breadcrumbs)){
+        margin-top: 0 !important; // 1
+    }
 
     @include breakpoint("medium") {
         margin-top: spacing("single") + spacing("base"); // 1
