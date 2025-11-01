@@ -12,6 +12,7 @@
 <footer class="footer" role="contentinfo">
     <h2 class="footer-title-sr-only">{{lang 'footer.title'}}</h2>
     <div class="container">
+
         {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
             <article class="footer-info-col
                 footer-info-col--social
@@ -21,7 +22,19 @@
                     {{> components/common/social-links}}
             </article>
         {{/if}}
+
         <section class="footer-info">
+            {{{region name="flaircraft-footer--global"}}}
+
+            {{#if settings.address}}
+                <article class="footer-info-col footer-info-col--small" data-section-type="storeInfo">
+                    <h3 class="footer-info-heading">{{lang 'footer.info'}}</h3>
+                    <address>{{nl2br settings.address}}</address>
+                    {{#if settings.phone_number}}
+                        <strong>{{lang 'footer.call_us' phone_number=settings.phone_number}}</strong>
+                    {{/if}}
+                </article>
+            {{/if}}
             <article class="footer-info-col footer-info-col--small" data-section-type="footer-webPages">
                 <h3 class="footer-info-heading">{{lang 'footer.navigate'}}</h3>
                 <ul class="footer-info-list">
@@ -61,16 +74,6 @@
             </article>
             {{/and}}
 
-            {{#if settings.address}}
-            <article class="footer-info-col footer-info-col--small" data-section-type="storeInfo">
-                <h3 class="footer-info-heading">{{lang 'footer.info'}}</h3>
-                <address>{{nl2br settings.address}}</address>
-                {{#if settings.phone_number}}
-                    <strong>{{lang 'footer.call_us' phone_number=settings.phone_number}}</strong>
-                {{/if}}
-            </article>
-            {{/if}}
-
             <article class="footer-info-col" data-section-type="newsletterSubscription">
                 {{#if settings.show_newsletter_box}}
                     {{> components/common/subscription-form}}
@@ -78,11 +81,6 @@
                 {{> components/common/payment-icons}}
             </article>
         </section>
-        {{#if theme_settings.show_powered_by}}
-            <div class="footer-copyright">
-                <p class="powered-by">{{lang 'footer.powered_by'}} <a href="https://www.bigcommerce.com?utm_source=merchant&amp;utm_medium=poweredbyBC" rel="nofollow">BigCommerce</a></p>
-            </div>
-        {{/if}}
         {{#if theme_settings.show_copyright_footer}}
             <div class="footer-copyright">
                 <p class="powered-by">&copy; {{moment format="YYYY"}} {{settings.store_name}} </p>
