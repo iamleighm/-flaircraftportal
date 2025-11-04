@@ -14,6 +14,15 @@
         }
     }
     border-radius:0px;
+
+    &.button--secondary{
+        border-color:#ffffff;
+        color: #ffffff;
+        &:hover{
+            background-color: #ffffff;
+            color: stencilColor("color-primary");
+        }
+    }
 }
 
 .button[disabled] {
