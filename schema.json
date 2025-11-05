@@ -176,24 +176,24 @@
         "id": "fontSize-h1",
         "options": [
           {
-            "value": 24,
-            "label": "24px"
+            "value": 56,
+            "label": "56px"
           },
           {
-            "value": 26,
-            "label": "26px"
+            "value": 52,
+            "label": "52px"
           },
           {
-            "value": 28,
-            "label": "28px"
+            "value": 48,
+            "label": "48px"
           },
           {
-            "value": 32,
-            "label": "32px"
+            "value": 44,
+            "label": "44px"
           },
           {
-            "value": 36,
-            "label": "36px"
+            "value": 40,
+            "label": "40px"
           }
         ]
       },
@@ -203,24 +203,24 @@
         "id": "fontSize-h2",
         "options": [
           {
-            "value": 21,
-            "label": "21px"
+            "value": 48,
+            "label": "48px"
           },
           {
-            "value": 23,
-            "label": "23px"
+            "value": 44,
+            "label": "44px"
           },
           {
-            "value": 25,
-            "label": "25px"
+            "value": 42,
+            "label": "42px"
           },
           {
-            "value": 29,
-            "label": "29px"
+            "value": 38,
+            "label": "38px"
           },
           {
-            "value": 33,
-            "label": "33px"
+            "value": 34,
+            "label": "34px"
           }
         ]
       },
@@ -230,24 +230,24 @@
         "id": "fontSize-h3",
         "options": [
           {
-            "value": 18,
-            "label": "18px"
+            "value": 32,
+            "label": "32px"
           },
           {
-            "value": 20,
-            "label": "20px"
+            "value": 30,
+            "label": "30px"
           },
           {
-            "value": 22,
-            "label": "22px"
+            "value": 28,
+            "label": "28px"
           },
           {
             "value": 26,
             "label": "26px"
           },
           {
-            "value": 30,
-            "label": "30px"
+            "value": 24,
+            "label": "24px"
           }
         ]
       },
@@ -257,24 +257,24 @@
         "id": "fontSize-h4",
         "options": [
           {
-            "value": 16,
-            "label": "16px"
-          },
-          {
-            "value": 18,
-            "label": "18px"
-          },
-          {
-            "value": 20,
-            "label": "20px"
-          },
-          {
             "value": 24,
             "label": "24px"
           },
           {
-            "value": 28,
-            "label": "28px"
+            "value": 23,
+            "label": "23px"
+          },
+          {
+            "value": 22,
+            "label": "22px"
+          },
+          {
+            "value": 21,
+            "label": "21px"
+          },
+          {
+            "value": 20,
+            "label": "20px"
           }
         ]
       },
@@ -284,24 +284,24 @@
         "id": "fontSize-h5",
         "options": [
           {
-            "value": 11,
-            "label": "11px"
+            "value": 20,
+            "label": "20px"
           },
           {
-            "value": 13,
-            "label": "13px"
+            "value": 18,
+            "label": "18px"
           },
           {
-            "value": 15,
-            "label": "15px"
+            "value": 16,
+            "label": "16px"
           },
           {
-            "value": 19,
-            "label": "19px"
+            "value": 14,
+            "label": "14px"
           },
           {
-            "value": 23,
-            "label": "23px"
+            "value": 12,
+            "label": "12px"
           }
         ]
       },
@@ -311,24 +311,24 @@
         "id": "fontSize-h6",
         "options": [
           {
-            "value": 9,
-            "label": "9px"
+            "value": 20,
+            "label": "20px"
           },
           {
-            "value": 11,
-            "label": "11px"
+            "value": 18,
+            "label": "18px"
           },
           {
-            "value": 13,
-            "label": "13px"
+            "value": 16,
+            "label": "16px"
           },
           {
-            "value": 17,
-            "label": "17px"
+            "value": 14,
+            "label": "14px"
           },
           {
-            "value": 21,
-            "label": "21px"
+            "value": 12,
+            "label": "12px"
           }
         ]
       },
