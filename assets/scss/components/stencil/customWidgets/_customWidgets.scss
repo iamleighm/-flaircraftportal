@@ -399,7 +399,7 @@
 
 /* Region Styling */
 
-
+/* Features Section Widget */
 .widget-template.features-section{
     .container{
         .feature-wrapper{
@@ -416,6 +416,60 @@
                     img{
                         width: 100%;
                         height: auto;
+                    }
+                }
+                @media (max-width: $screen-large) {
+                    flex: 1 1 50%;
+                }
+                @media (max-width: $screen-medium) {
+                    flex: 1 1 100%;
+                }
+            }
+            @media (max-width: $screen-large) {
+                flex-flow: wrap;
+                max-width: 1024px;
+                margin: auto;
+            }
+            @media (max-width: $screen-medium) {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    }
+}
+
+/* Testimonials Section Widget */
+.widget-template.testimonial-section{
+    .container{
+        .testimonial-wrapper{
+            display: flex;
+            gap:20px;
+            justify-content: center;
+            .testimonial-column{
+                flex: 1 1 100%;
+                text-align: center;
+                padding: 60px 30px;
+                min-height: 400px;
+                justify-content: space-between;
+                display: flex;
+                flex-direction: column;
+                .media-wrapper{
+                    max-width: 30px;
+                    margin: 0 auto 0 auto;
+                    img{
+                        width: 100%;
+                        height: auto;
+                    }
+                }
+                .testimonial-quote{
+                    line-height: 2;
+                    margin: 0;
+                }
+                .testimonial-author{
+                    margin: 0;
+                    text-transform: none;
+                    span{
+                        display: block;
                     }
                 }
                 @media (max-width: $screen-large) {
