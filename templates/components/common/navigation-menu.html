@@ -15,14 +15,9 @@
         {{/each}}
         {{#unless theme_settings.hide_content_navigation}}
             {{#each pages}}
-                 <li class="navPages-item navPages-item-page">
-                     <a class="navPages-action{{#if name '==' ../page.title}} activePage{{/if}}"
-                        href="{{url}}"
-                        aria-label="{{name}}"
-                     >
-                         {{name}}
-                     </a>
-                 </li>
+                <li class="navPages-item">
+                    {{> components/common/navigation-list}}
+                </li>
              {{/each}}
         {{/unless}}
     </ul>
