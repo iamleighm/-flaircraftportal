@@ -42,6 +42,19 @@
         }
     }
 
+    #cart-preview-dropdown{
+        .previewCartItem-name{
+            a{
+                color: stencilColor("navPages-color");
+            }
+        }
+        .previewCartAction-viewCart{
+            .button--action{
+                color: stencilColor("navPages-color");
+            }
+        }
+    }
+
     @include breakpoint("medium") {
         padding: 6px 0;
         position: relative;

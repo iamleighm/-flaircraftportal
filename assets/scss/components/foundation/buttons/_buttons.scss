@@ -23,6 +23,10 @@
             color: stencilColor("color-primary");
         }
     }
+
+    &.button--small{
+        font-size: 12px;
+    }
 }
 
 .button[disabled] {

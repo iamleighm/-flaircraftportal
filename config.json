@@ -465,7 +465,7 @@
           }
         ],
         "show_channels": false,
-        "hide_breadcrumbs": false,
+        "hide_breadcrumbs": true,
         "hide_page_heading": true,
         "hide_category_page_heading": false,
         "hide_blog_page_heading": false,
