@@ -3,7 +3,17 @@
     display: none;
 }
 
+.productView-details.product-data.out-of-stock{
+    [data-product-option-change]{
+        display: none !important;
+    }
+}
+
+
 .product-options{
+    .bulk-add-to-cart-title{
+        display: none;
+    }
     .bulk-option-form{
         [data-product-option-change]{
             display: block !important;

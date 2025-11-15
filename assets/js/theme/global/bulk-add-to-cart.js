@@ -7,18 +7,26 @@ export default function ($scope, context) {
 
     const $form = $('form[data-cart-item-add]', $scope);
     const $cardId = context.cartId;
-
+    var outofstock = false;
+    
     console.log("Bulk Add to Cart JS Loaded");
     console.log("Context:", $cardId);
     console.log("Scope:", $scope);
+    var alertBoxAll = document.querySelectorAll('.alertBox-message');
+    alertBoxAll.forEach(alertBox => {
+        if(alertBox.textContent.toLowerCase().includes('out of stock')) {
+            outofstock = true;
+            document.querySelector('.product-data').classList.add('out-of-stock');
+        }
+    });
 
-    if(document.querySelector('[data-product-option-change]') && document.querySelector('.productView-options input[type="radio"]')){
+    if(document.querySelector('[data-product-option-change]') && document.querySelector('.productView-options input[type="radio"]') && outofstock !== true){
 
         /* Bulk Add to Cart Form */
         var currentProductOptions = document.querySelector('.productView-options');
         var dataProductOptionChange = document.querySelector('[data-product-option-change]');
         currentProductOptions.insertAdjacentHTML('afterend', `<div class="bulk-add-to-cart-action">
-            <h3>Bulk Add to Cart</h3>
+            <h4 class="bulk-add-to-cart-title">Bulk Add to Cart</h4>
             ${dataProductOptionChange.outerHTML}
             <div class="custom-add-to-cart-button">
                 <button type="button" class="button button--primary" id="form-action-addToCart" onclick="bulkAddtoCartAction(event);">
@@ -26,10 +34,10 @@ export default function ($scope, context) {
                 </button>
             </div>
             <!--open custom modal-->
-            <div class="modal-button-container">
-                <a class="button" href="#uniqueID" data-reveal-id="uniqueID">Show me the Modal</a>
+            <div class="modal-button-container" style="display:none;">
+                <a class="button" href="#quickCheckoutModal" data-reveal-id="quickCheckoutModal">quickCheckoutModal</a>
             </div>
-            <div id="uniqueID" class="modal modal--large" data-reveal>
+            <div id="quickCheckoutModal" class="modal modal--large" data-reveal>
                 <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
                     <span aria-hidden="true">&#215;</span>
                 </a>
@@ -143,15 +151,52 @@ export default function ($scope, context) {
         var bulkOptionForm = Array.from(document.querySelectorAll('.bulk-option-form input[type="radio"]'));
 
         /* configure and Open Bulk Add to cart Modal */
-        const uniqueIDModal = document.querySelector('[data-reveal-id="uniqueID"]');
-        //uniqueIDModal.click();
+        const quickCheckoutModalContent = document.querySelector('#quickCheckoutModal .modal-content');
+        const quickCheckoutModalAnchor = document.querySelector('[data-reveal-id="quickCheckoutModal"]');
+        quickCheckoutModalAnchor.click();
+        var modelProductHTML = `
+        <div class="modal-header">
+            <h2>Bulk Add to Cart Summary</h2></div>
+        </div>
+        <div class="modal-product-list">
+        </div>
+            `;
 
         var requests = bulkOptionForm.map(radio => {
             var getVariantId = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('value');
+            console.log("getVariantId:", getVariantId);
+
             var quantityToAdd = radio.closest('.form-option-wrapper').querySelector('.bulk-quantity-input').value;
+            //console.log("quantityToAdd:", quantityToAdd);
+
             if(quantityToAdd > 0){
-                console.log("getVariantId:", getVariantId , " quantityToAdd:", quantityToAdd);
+                var getVariantImage = radio.parentElement.querySelector('input[type="radio"]').getAttribute('data-image');
+                if(getVariantImage == null || getVariantImage == undefined){
+                    getVariantImage = '/stencil/00000000-0000-0000-0000-000000000001/img/ProductDefault.gif';
+                }
+                var modelProductItemHTML = ``;
+                modelProductItemHTML = `<div class="productItem">
+                <img src="${getVariantImage}" alt="${radio.getAttribute('data-image-alt')}" />
+                    <div class="productInfo">
+                        <div class="productTitle">
+                            ${radio.closest('.form-option-wrapper').querySelector('input[type="radio"] ~ label .form-option-variant').textContent}
+                        </div>
+                        <div class="productQuantity">
+                            Adding to cart - Variant ID: ${getVariantId} | Quantity: ${quantityToAdd}
+                        </div>
+                    </div>
+                </div>`;
+
+                setTimeout(() => {
+                    if(document.querySelector('#quickCheckoutModal .modal-product-list')){
+                        document.querySelector('#quickCheckoutModal .modal-product-list').insertAdjacentHTML('beforeend', modelProductItemHTML);
+                    }
+                }, 500);
+                //console.log("getVariantId:", getVariantId , " quantityToAdd:", quantityToAdd);
             }
+            //console.log("modelProductHTML:", modelProductHTML);
+            modelProductHTML += ``;
+            quickCheckoutModalContent.innerHTML = modelProductHTML;
         });
 
         // Prepare requests to be executed sequentially
@@ -165,6 +210,7 @@ export default function ($scope, context) {
             var quantityAlreadyInCart = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-cart-qty');
 
             console.log('getVariantSKU:', getVariantSKU,' quantityAlreadyInCart:', quantityAlreadyInCart, ' quantityToAdd:', quantityToAdd);
+
             /*
             if(quantityToAdd > 0 && quantityToAdd <= getVariantStock){
                 return function() {

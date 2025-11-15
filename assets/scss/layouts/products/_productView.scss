@@ -12,11 +12,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-left: -(spacing("base"));
-    margin-right: -(spacing("base"));
+    margin-left: -$container-padding;
+    margin-right: -$container-padding;
 
     @include breakpoint("medium") {
-        display: block;
+        display: flex;
     }
 
     .modal & {
@@ -33,23 +33,32 @@
 
 .productView-images {
     @include grid-column(12);
-    padding-left: spacing("base");
-    padding-right: spacing("base");
+    padding-left: 0;
+    padding-right: 0;
 
     @include breakpoint("medium") {
+        padding-left: spacing("base");
+        padding-right: spacing("base");
         width: grid-calc(6, $total-columns);
     }
 }
 
 .productView-details {
     @include grid-column(12);
-    padding-left: spacing("base");
-    padding-right: spacing("base");
+    padding-left: 0;
+    padding-right: 0;
 
     @include breakpoint("medium") {
+        padding-left: spacing("base");
+        padding-right: spacing("base");
         clear: right;
         float: right;
         width: grid-calc(6, $total-columns);
+        &.product-options{
+            width: grid-calc(12, $total-columns);
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 
     .productView--quickView & {
@@ -63,8 +72,9 @@
 
 .productView-description {
     @include grid-column(12);
-    padding-left: spacing("base");
-    padding-right: spacing("base");
+    padding-top: spacing("double");
+    padding-left: spacing("single");
+    padding-right: spacing("single");
     position: relative;
     z-index: 1;
 
@@ -81,5 +91,21 @@
             float: none;
             width: 100%;
         }
+    }
+}
+
+.productView-relatedProducts{
+    padding-left: 0;
+    padding-right: 0;
+     @include breakpoint("medium") {
+        padding-left: spacing("base");
+        padding-right: spacing("base");
+    }
+}
+
+.productView-hero{
+    padding-bottom: spacing("double");
+    @include breakpoint("medium") {
+        padding-bottom: 0;
     }
 }

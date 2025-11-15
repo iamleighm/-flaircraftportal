@@ -19,6 +19,7 @@
 }
 
 .productView-image {
+    border: container("border");
     align-items: center;
     display: flex;
     justify-content: center;
@@ -45,8 +46,12 @@
     margin: auto;
     max-width: get-width(stencilString("product_size"));
     position: relative;
-    width: 100%;
-
+    height: 350px;
+    width: 350px;
+    @include breakpoint("medium") {
+        height: 550px;
+        width: 550px;
+    }
     img {
         @include lazy-loaded-img;
         /* Object-fit polyfill */
@@ -60,10 +65,16 @@
 .productView-thumbnails {
     @include u-listBullets("none");
     @include grid-row($behavior: "nest");
-
-    margin-left: -(spacing("quarter"));
-    margin-right: -(spacing("quarter"));
-
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    justify-content: flex-start;
+    gap: spacing("half");
+    flex-flow: wrap;
+    &:before,
+    &:after{
+        content:none;
+    }
     &[data-slick] {
         opacity: 0;
 
@@ -98,25 +109,35 @@
 
 .productView-thumbnail {
     @include grid-column(3);
-    padding: spacing("quarter");
+    padding: 0;
     text-align: center;
-
+    width: 20%;
+    @include breakpoint("small") {
+        width: auto;        
+    }
+    @include breakpoint("medium") {
+        width: 100px;        
+    }
     @include breakpoint("large") {
-        width: 20%;
+        width: 100px;
+        /*margin-right: spacing("half");*/
     }
 }
 
 .productView-thumbnail-link {
     border: container("border");
-    box-sizing: content-box;
+    box-sizing: border-box;
     display: flex;
-    height: 67px;
+    height: auto;
     justify-content: center;
-    max-width: 75px;
+    max-width: 100px;
     padding: 2px;
     position: relative;
     width: 100%;
-
+    @include breakpoint("large") {
+        height: 100px;
+        width: 100px;
+    }
     &:hover,
     &.is-active {
         border-color: color("greys", "darker");
@@ -128,7 +149,7 @@
 // -----------------------------------------------------------------------------
 
 .productView-details {
-    padding-bottom: spacing("single") + spacing("third");
+    padding-bottom: 0;
 }
 
 
@@ -144,18 +165,26 @@
     > :last-child {
         margin-bottom: 0;
     }
+
+    .product-SKU{
+        display: flex;
+        span{
+            margin-bottom: 0;
+        }
+    }
 }
 
 .productView-title {
     font-size: fontSize("small");
-    margin: -(spacing("half")) 0 spacing("quarter");
+    line-height: 1.2;
+    margin: -(spacing("half")) 0 spacing("single");
 
     @include breakpoint("medium") {
         margin-top: spacing("single");
     }
 
     @include breakpoint("large") {
-        font-size: fontSize("largest");
+        font-size: fontSize("small");
     }
 }
 
@@ -182,12 +211,14 @@
 // -----------------------------------------------------------------------------
 
 .productView-price {
-    font-size: fontSize("smaller");
-    margin-bottom: spacing("third");
+    font-size: fontSize("small");
+    margin-top: spacing("base");
+    margin-bottom: spacing("base");
 
     @include breakpoint("medium") {
-        font-size: fontSize("larger");
-        margin-bottom: spacing("base");
+        font-size: fontSize("large");
+        margin-top: spacing("single");
+        margin-bottom: spacing("single");
     }
 
     .price-section--saving {
@@ -199,6 +230,10 @@
         color: inherit;
         font-size: inherit;
     }
+}
+
+.productView-share{
+    margin-top: spacing("single");
 }
 
 .productView-reviewLink {
@@ -231,7 +266,7 @@
     > :first-child {
 
         @include breakpoint("small") {
-            margin-top: spacing("single");
+            /*margin-top: spacing("single");*/
         }
     }
 
@@ -239,6 +274,48 @@
         margin-bottom: 0;
     }
 }
+
+.productView-info-section{
+    background-color: #f9f9f9;
+    padding-top: spacing("double");
+    padding-bottom: spacing("double");
+    @include breakpoint("medium") {
+        padding-top: spacing("double") + spacing("double");
+        padding-bottom: spacing("double") + spacing("double");
+    }
+}
+
+.productView-info-customfields,
+.productView-info-availability,
+.productView-info-upc{
+    max-width: 800px;
+    margin: auto;
+    .productView-info-item:nth-child(even){
+        background-color: #ffffff;
+    }
+}
+
+.productView-info-customfields{
+    .productView-info-customfields-Title{
+        margin-top: 0;
+    }
+    .productView-info-item{
+        display: flex;
+        align-items: center;
+        dt{
+            font-weight: 600;
+        }
+        dd{
+            font-style: italic;
+        }
+        dt,dd{
+            padding: 5px;
+            width: 50%;
+            margin: 0;
+        }
+    }
+}
+
 
 .productView-info-name,
 .productView-info-value {
