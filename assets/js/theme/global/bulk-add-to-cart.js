@@ -38,7 +38,7 @@ export default function ($scope, context) {
                 <a class="button" href="#quickCheckoutModal" data-reveal-id="quickCheckoutModal">quickCheckoutModal</a>
             </div>
             <div id="quickCheckoutModal" class="modal modal--large" data-reveal>
-                <a href="#" class="modal-close" aria-label="{{lang 'common.close'}}" role="button">
+                <a href="#" class="modal-close modal-close-reload" aria-label="{{lang 'common.close'}}" role="button">
                     <span aria-hidden="true">&#215;</span>
                 </a>
                 <div class="modal-content"></div>
@@ -166,13 +166,13 @@ export default function ($scope, context) {
             </div>
         </div>
         <div class="modal-footer">
-            <button class="modal-close button button--primary" data-close aria-label="Close modal" >Close</button>
+            <button class="modal-close-reload button button--primary" data-close aria-label="Close modal" >Close</button>
         </div>
         `;
 
         // Reload page when modal is closed
         setTimeout(() => {
-            const closeBtn = document.querySelectorAll('.modal-close');
+            const closeBtn = document.querySelectorAll('.modal-close-reload');
             closeBtn.forEach(closeBtn => {
                 closeBtn.addEventListener('click', function() {
                     location.reload();
@@ -200,7 +200,7 @@ export default function ($scope, context) {
             if(radio.classList.contains('changed')){
                 var getVariantImage = radio.parentElement.querySelector('input[type="radio"]').getAttribute('data-image');
                 if(getVariantImage == null || getVariantImage == undefined){
-                    getVariantImage = '/stencil/00000000-0000-0000-0000-000000000001/img/ProductDefault.gif';
+                    getVariantImage = document.querySelector('.productView-image[data-default-image-url]').getAttribute('data-default-image-url');
                 }
                 var modelProductItemHTML = ``;
                 modelProductItemHTML = `<div class="productItem loader" data-variant-id="${getVariantId}">
@@ -265,7 +265,7 @@ export default function ($scope, context) {
                 return function() {
                     return $.get("/cart.php?action=add&product_id=" + getVariantId + "&qty=" + quantityToAdd + "&sku=" + getVariantSKU)
                         .done(function(data, status, xhr) {
-                            console.log('item complete with status ' + status.data.status);
+                            console.log('item complete with status ' + status);
                             removeLoaderfromModalItem(getVariantId);
                         })
                         .fail(function(xhr, status, error) {
