@@ -9,9 +9,9 @@ export default function ($scope, context) {
     const $cardId = context.cartId;
     var outofstock = false;
     
-    console.log("Bulk Add to Cart JS Loaded");
-    console.log("Context:", $cardId);
-    console.log("Scope:", $scope);
+    //console.log("Bulk Add to Cart JS Loaded");
+    //console.log("Context:", $cardId);
+    //console.log("Scope:", $scope);
     var alertBoxAll = document.querySelectorAll('.alertBox-message');
     alertBoxAll.forEach(alertBox => {
         if(alertBox.textContent.toLowerCase().includes('out of stock')) {
@@ -67,6 +67,7 @@ export default function ($scope, context) {
         var maxQty = parseInt(bulkQuantityInput.getAttribute('max'));
         if(currentQty < maxQty){
             bulkQuantityInput.value = currentQty + 1;
+            bulkQuantityInput.closest('.form-option-wrapper').querySelector('.form-radio').classList.add('changed');
         }
     };
 
@@ -76,6 +77,7 @@ export default function ($scope, context) {
         var minQty = parseInt(bulkQuantityInput.getAttribute('min'));
         if(currentQty > minQty){
             bulkQuantityInput.value = currentQty - 1;
+            bulkQuantityInput.closest('.form-option-wrapper').querySelector('.form-radio').classList.add('changed');
         }
     };
 
@@ -85,6 +87,7 @@ export default function ($scope, context) {
         var maxQty = parseInt(bulkQuantityInput.getAttribute('max'));
         if(currentQty > maxQty){
             bulkQuantityInput.value = maxQty;
+            bulkQuantityInput.closest('.form-radio').classList.add('changed');
         }
     }
 
@@ -101,7 +104,7 @@ export default function ($scope, context) {
                     console.error("Error updating product attributes:", err);
                     resolve();
                 } else {
-                    console.log(" utils.api.productAttributes.optionChange:", response);
+                    //console.log(" utils.api.productAttributes.optionChange:", response);
                     var getVariantStock = response.data.stock;
                     var getVariantSKU = response.data.sku;
 
@@ -123,6 +126,7 @@ export default function ($scope, context) {
 
                     /* Update Variant Label and Stock Info */
                     document.querySelector('.bulk-option-form input[value="'+variantId+'"] ~ label .form-option-variant').innerHTML = 'Size: '+getVariantLabel + '<br> In stock: ' + getVariantStock + '';
+                    document.querySelector('.bulk-option-form input[value="'+variantId+'"]').setAttribute('data-size', getVariantLabel );
 
                     /* setAttribute Stock Info */
                     document.querySelector('.bulk-option-form input[value="'+variantId+'"] ~ .bulk-add-to-cart-action .bulk-quantity-input').setAttribute('max', getVariantStock);
@@ -153,36 +157,68 @@ export default function ($scope, context) {
         /* configure and Open Bulk Add to cart Modal */
         const quickCheckoutModalContent = document.querySelector('#quickCheckoutModal .modal-content');
         const quickCheckoutModalAnchor = document.querySelector('[data-reveal-id="quickCheckoutModal"]');
-        quickCheckoutModalAnchor.click();
         var modelProductHTML = `
         <div class="modal-header">
-            <h2>Bulk Add to Cart Summary</h2></div>
+            <h3>Bulk Add to Cart Summary</h3>
         </div>
-        <div class="modal-product-list">
+        <div class="modal-body">
+            <div class="modal-product-list">
+            </div>
         </div>
-            `;
+        <div class="modal-footer">
+            <button class="modal-close button button--primary" data-close aria-label="Close modal" >Close</button>
+        </div>
+        `;
+
+        // Reload page when modal is closed
+        setTimeout(() => {
+            const closeBtn = document.querySelectorAll('.modal-close');
+            closeBtn.forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    location.reload();
+                });
+            });
+        }, 0);
 
         var requests = bulkOptionForm.map(radio => {
-            var getVariantId = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('value');
-            console.log("getVariantId:", getVariantId);
+            var getVariantId = parseInt(radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('value'));
+            var quantityToAdd = parseInt(radio.closest('.form-option-wrapper').querySelector('.bulk-quantity-input').value);
+            var quantityAlreadyInCart = parseInt(radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-cart-qty')) || null;
+            var getVariantSize = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-size');
+            
+            //console.log("radio:", radio);
+            var statusText = 'Adding Item';
 
-            var quantityToAdd = radio.closest('.form-option-wrapper').querySelector('.bulk-quantity-input').value;
-            //console.log("quantityToAdd:", quantityToAdd);
+            /* Check if product variant has changed or added to cart */
+            if(quantityToAdd == 0){
+                statusText = 'Removing Item';
+            }
+            else if(quantityAlreadyInCart !== null){
+                statusText = 'Updating Item';
+            }
 
-            if(quantityToAdd > 0){
+            if(radio.classList.contains('changed')){
                 var getVariantImage = radio.parentElement.querySelector('input[type="radio"]').getAttribute('data-image');
                 if(getVariantImage == null || getVariantImage == undefined){
                     getVariantImage = '/stencil/00000000-0000-0000-0000-000000000001/img/ProductDefault.gif';
                 }
                 var modelProductItemHTML = ``;
-                modelProductItemHTML = `<div class="productItem">
-                <img src="${getVariantImage}" alt="${radio.getAttribute('data-image-alt')}" />
+                modelProductItemHTML = `<div class="productItem loader" data-variant-id="${getVariantId}">
+                    <div class="productImage">
+                        <img src="${getVariantImage}" alt="${radio.getAttribute('data-image-alt')}" />
+                    </div>
                     <div class="productInfo">
                         <div class="productTitle">
-                            ${radio.closest('.form-option-wrapper').querySelector('input[type="radio"] ~ label .form-option-variant').textContent}
+                            ${document.querySelector('.productView-title').textContent}
+                        </div>
+                        <div class='productVariant'>
+                            Size: ${getVariantSize}
                         </div>
                         <div class="productQuantity">
-                            Adding to cart - Variant ID: ${getVariantId} | Quantity: ${quantityToAdd}
+                            Quantity: ${quantityToAdd}
+                        </div>
+                        <div class="productVariantStatus button button--primary">
+                            ${statusText}...
                         </div>
                     </div>
                 </div>`;
@@ -202,75 +238,124 @@ export default function ($scope, context) {
         // Prepare requests to be executed sequentially
         
         var requests = bulkOptionForm.map(radio => {
-            var getVariantId = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('value');
-            var quantityToAdd = radio.closest('.form-option-wrapper').querySelector('.bulk-quantity-input').value;
+            var quantityToAdd = parseInt(radio.closest('.form-option-wrapper').querySelector('.bulk-quantity-input').value);
+            var getVariantId = parseInt(radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('value'));
             var getVariantSKU = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-sku');
-            var getVariantStock = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-stock');
+            var getVariantStock = parseInt(radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-stock'));
+            var getCartItemId = 
+            radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-cart-itemid');
+            var getVariantSize = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-size');
 
-            var quantityAlreadyInCart = radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-cart-qty');
+            var quantityAlreadyInCart = parseInt(radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').getAttribute('data-cart-qty')) || null;
+            //console.log('Status Check: getVariantSKU:', getVariantSKU, 'getVariantSize: ', getVariantSize, 'getVariantId: ', getVariantId,'quantityAlreadyInCart:', quantityAlreadyInCart, 'getCartItemId:', getCartItemId , ' quantityToAdd:', quantityToAdd , ' getVariantStock:', getVariantStock);
 
-            console.log('getVariantSKU:', getVariantSKU,' quantityAlreadyInCart:', quantityAlreadyInCart, ' quantityToAdd:', quantityToAdd);
 
-            /*
-            if(quantityToAdd > 0 && quantityToAdd <= getVariantStock){
+            if(quantityToAdd > 0 && quantityToAdd > getVariantStock){
+                // when quantity doesnt meet stock limit
+                const tmp = document.createElement('DIV');
+                tmp.innerHTML = '<h3>Item Exceeds stock</h3>';
+                radio.closest('.form-option-wrapper').querySelector('input[type="radio"]').classList.add('error');
+                document.querySelector('.bulk-option-form').classList.add('exceeds-stock');
+                return showAlertModal(tmp.textContent || tmp.innerText);
+            }
+            else if(quantityToAdd > 0 && quantityToAdd <= getVariantStock && quantityAlreadyInCart == null && getCartItemId == null){
+                console.log('Adding item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
+                quickCheckoutModalAnchor.click();
+
                 return function() {
-                    console.log("getVariantId:", getVariantId , getVariantSKU, "getVariantStock:"," quantityToAdd:", quantityToAdd, "getVariantSKU:", getVariantStock);
                     return $.get("/cart.php?action=add&product_id=" + getVariantId + "&qty=" + quantityToAdd + "&sku=" + getVariantSKU)
                         .done(function(data, status, xhr) {
-                            console.log('item complete with status ' + status);
+                            console.log('item complete with status ' + status.data.status);
+                            removeLoaderfromModalItem(getVariantId);
                         })
                         .fail(function(xhr, status, error) {
                             console.log('oh noes, error with status ' + status + ' and error: ');
                             console.error(error);
                         });
                 };
-            } else if(quantityToAdd == getVariantStock){
+            } else if(quantityToAdd <= getVariantStock && quantityAlreadyInCart !== null && getCartItemId !== null && quantityToAdd !== quantityAlreadyInCart){
+                console.log('Modify item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
                 // remove item and add again in cart with updated quanity in cart
-            } else {
-                
-                // when quantity doesnt meet stock limit
-                const tmp = document.createElement('DIV');
-                tmp.innerHTML = '<h3>Item Exceeds stock</h3>';
-                return showAlertModal(tmp.textContent || tmp.innerText);
-            }*/
+                quickCheckoutModalAnchor.click();
+
+                return function() {
+                    return utils.api.cart.itemUpdate(getCartItemId, quantityToAdd, (err, response) => {
+                        if (err) {
+                            console.error('Error updating cart item:', err);
+                        } else {
+                            console.log('Cart item updated:', response.data.status);
+                            removeLoaderfromModalItem(getVariantId);
+                        }
+                    });
+                };
+            }
+            radio.classList.remove('changed')
+             
         }).filter(Boolean);
 
-        // Helper to run promises sequentially
+        // Helper to run promises sequentially with 500ms delay between each
         function runSequentially(tasks) {
             return tasks.reduce((promise, task) => {
-                return promise.then(() => task());
+            return promise.then(() => {
+                return task().then(() => new Promise(resolve => setTimeout(resolve, 500)));
+            });
             }, Promise.resolve());
         }
 
-        runSequentially(requests).then(function() {
+        // Ensure each request returns a Promise
+        runSequentially(requests.map(fn => () => Promise.resolve(fn()))).then(function() {
             console.log('All bulk add-to-cart requests completed.');
-            
         });
         
+    }
+
+    function removeLoaderfromModalItem(variantId){
+        if(document.querySelector('#quickCheckoutModal .modal-product-list .productItem[data-variant-id="'+variantId+'"]')){
+            document.querySelector('#quickCheckoutModal .modal-product-list .productItem[data-variant-id="'+variantId+'"]').classList.remove('loader');
+
+            var productVariantStatus = document.querySelector('#quickCheckoutModal .modal-product-list .productItem[data-variant-id="'+variantId+'"] .productVariantStatus');
+            if(productVariantStatus.textContent.includes('Adding')){
+                productVariantStatus.textContent = 'Item Added';
+            }
+            else if(productVariantStatus.textContent.includes('Updating')){
+                productVariantStatus.textContent = 'Item Updated';
+            }
+            else if(productVariantStatus.textContent.includes('Removing')){
+                productVariantStatus.textContent = 'Item Removed';
+            }
+        }
+
     }
 
     function getCartDetails(){
         return new Promise((resolve) => {
             /* Check if cart has this item, get qty */
-            utils.api.cart.getCart({}, (err, response) => {
-                // console.log('utils.api.cart.getCart:',response.lineItems);
+            if($cardId){
+                utils.api.cart.getCart({}, (err, response) => {
+                    console.log('utils.api.cart.getCart:',response.lineItems);
 
-                var getCartItems = response.lineItems.physicalItems;
-                getCartItems.forEach(item => {
-                    var getCartSku = item.sku;
-                    if(document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]')){
-                        console.log("Cart SKU:", item.sku, " Cart Item Qty:", item.quantity);
-                        var getVariantInput = document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]');
-                        getVariantInput.setAttribute('data-cart-qty', item.quantity);
-                        console.log(getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]'));
-                        getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]').value = item.quantity;
-                    }
-                    //document.querySelector('.bulk-option-form input[data-sku="14L762-7"]');
+                    var getCartItems = response.lineItems.physicalItems;
+                    getCartItems.forEach(item => {
+                        var getCartSku = item.sku;
+                        if(document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]')){
+                            console.log("Cart SKU:", item.sku, " Cart Item Qty:", item.quantity);
+                            var getVariantInput = document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]');
+                            getVariantInput.setAttribute('data-cart-qty', item.quantity);
+                            console.log(getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]'));
+                            getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]').value = item.quantity;
+                            getVariantInput.setAttribute('data-cart-itemid', item.id);
+                        }
+                        //document.querySelector('.bulk-option-form input[data-sku="14L762-7"]');
+                    });
+                    resolve();
                 });
-                resolve();
-            });
+            }
+            else{
+                document.querySelectorAll('.form-option-wrapper.loader').forEach(formWrapper => {
+                    formWrapper.classList.remove('loader');
+                });
+            }
         }).then(() => {
-            console.log('Cart details loaded');
             document.querySelectorAll('.form-option-wrapper.loader').forEach(formWrapper => {
                 formWrapper.classList.remove('loader');
             });
