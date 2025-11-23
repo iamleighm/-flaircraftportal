@@ -501,7 +501,7 @@
         "show_accept_amazonpay": false,
         "show_accept_googlepay": false,
         "show_accept_klarna": false,
-        "show_product_details_tabs": true,
+        "show_product_details_tabs": false,
         "show_product_reviews": false,
         "show_quick_payment_buttons": true,
         "show_custom_fields_tabs": false,

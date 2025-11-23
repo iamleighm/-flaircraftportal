@@ -278,7 +278,7 @@
 .productView-info-section{
     background-color: #f9f9f9;
     padding-top: spacing("double");
-    padding-bottom: spacing("double");
+    padding-bottom: spacing("base");
     @include breakpoint("medium") {
         padding-top: spacing("double") + spacing("double");
         padding-bottom: spacing("double") + spacing("double");
@@ -309,7 +309,7 @@
             font-style: italic;
         }
         dt,dd{
-            padding: 5px;
+            padding: 10px;
             width: 50%;
             margin: 0;
         }

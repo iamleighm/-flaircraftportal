@@ -192,9 +192,11 @@
                     {{/if}}
                 </div>
             </div>
+            <!--
             <div class="productView-share">
                 {{> components/common/share url=product.url}}
             </div>
+            -->
         </section>
     </div>
 
@@ -307,14 +309,15 @@
             </div>
             {{/if}}
         </div>
+        <div class="productView-description container">
+            {{#if theme_settings.show_product_details_tabs}}
+                {{> components/products/description-tabs}}
+            {{else}}
+                {{> components/products/description}}
+            {{/if}}
+        </div>
     </section>
-    <article class="productView-description container">
-        {{#if theme_settings.show_product_details_tabs}}
-            {{> components/products/description-tabs}}
-        {{else}}
-            {{> components/products/description}}
-        {{/if}}
-    </article>
+
 </div>
 
 <div id="previewModal" class="modal modal--large" data-reveal>
