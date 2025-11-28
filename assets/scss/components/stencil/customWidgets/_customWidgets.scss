@@ -391,6 +391,18 @@
     }
 }
 
+body.customer-logged-in{
+    .display-guest{
+        display:none;
+    }
+}
+
+body.customer-guest{
+    .display-logged-in{
+        display:none;
+    }
+}
+
 @media (max-width: $screen-large) {
     .widget-template.hero-section{
          .container{

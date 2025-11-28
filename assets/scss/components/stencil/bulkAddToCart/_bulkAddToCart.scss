@@ -137,6 +137,15 @@
         }
        
     }
+    .custom-add-to-cart-button{
+        display: flex;
+        #BulkaddToCart{
+            margin-right: 10px;
+        }
+        .form-wishlist{
+            margin: 0;
+        }
+    }
 }
 
 #quickCheckoutModal{
@@ -168,6 +177,7 @@
                 flex: 1 0 100%;
             }
             .productImage{
+                display: none;
                 width: 100%;
                 text-align: center;
                 img{

@@ -32,6 +32,15 @@ product:
             {{> components/products/reviews reviews=product.reviews product=product urls=urls}}
         {{/all}}
 
+        <div class="productView-relatedProducts container">
+            {{#if product.related_products}}
+                <h4 class="productView-title">{{lang 'products.related_products'}}</h4>
+                <div role="tabpanel" aria-hidden="false" class="tab-content has-jsContent is-active" id="tab-related">
+                    {{> components/products/carousel products=product.related_products columns=6 list="Related Products"}}
+                </div>
+            {{/if}}
+        </div>
+
         <!--{{> components/products/tabs}}-->
     </div>
 

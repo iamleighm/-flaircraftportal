@@ -86,7 +86,7 @@
     }
 
     .accordion-title {
-        font-weight: normal;
+        font-weight: 600;
         padding: $accordion-navList-padding;
         text-decoration: none;
         text-transform: inherit;
@@ -97,7 +97,7 @@
     }
 
     .accordion-indicator {
-        fill: color("greys", "light");
+        fill: stencilColor("button--primary-backgroundColor");
     }
 }
 

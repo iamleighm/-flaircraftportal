@@ -90,6 +90,11 @@
     .navList--inner {
         margin-left: spacing("single");
     }
+
+    .accordion-block:not(:last-child){
+        border-bottom: container("border");
+        padding-bottom: 2rem;
+    }
 }
 
 .facet-quick-heading {

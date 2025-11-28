@@ -17,6 +17,7 @@ ol.breadcrumbs {
     font-size: 0; // 2
     overflow: visible;
     text-align: center;
+    margin-bottom: 0;
     @include breakpoint("small") {
         display: block; // 1
     }

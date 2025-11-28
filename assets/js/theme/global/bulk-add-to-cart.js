@@ -29,7 +29,7 @@ export default function ($scope, context) {
             <h4 class="bulk-add-to-cart-title">Bulk Add to Cart</h4>
             ${dataProductOptionChange.outerHTML}
             <div class="custom-add-to-cart-button">
-                <button type="button" class="button button--primary" id="form-action-addToCart" onclick="bulkAddtoCartAction(event);">
+                <button type="button" class="button button--primary" id="BulkaddToCart" onclick="bulkAddtoCartAction(event);">
                     Bulk Add to Cart
                 </button>
             </div>
@@ -45,6 +45,15 @@ export default function ($scope, context) {
                 <div class="loadingOverlay"></div>
             </div>
         </div>`);
+
+        var getWishlistBtn = document.querySelector('form.form-wishlist');
+        if (getWishlistBtn) {
+            var bulkAddtoCartButton = document.querySelector('#BulkaddToCart');
+            // Move wishlist button next to bulk add to cart button, preserving events
+            bulkAddtoCartButton.parentNode.insertBefore(getWishlistBtn, bulkAddtoCartButton.nextSibling);
+
+
+        }
 
         document.querySelectorAll('.form-option-wrapper').forEach(formOptionWrapper => {
             formOptionWrapper.classList.add('loader');
@@ -200,7 +209,10 @@ export default function ($scope, context) {
             if(radio.classList.contains('changed')){
                 var getVariantImage = radio.parentElement.querySelector('input[type="radio"]').getAttribute('data-image');
                 if(getVariantImage == null || getVariantImage == undefined){
-                    getVariantImage = document.querySelector('.productView-image[data-default-image-url]').getAttribute('data-default-image-url');
+                    /* Get Bigcommerce Default Image */
+                    //getVariantImage = document.querySelector('.productView-image[data-default-image-url]').getAttribute('data-default-image-url');
+                    /* Get Main Product Image */
+                    getVariantImage = document.querySelector('.productView-thumbnails img').getAttribute('data-srcset').split('?c=1')[0];
                 }
                 var modelProductItemHTML = ``;
                 modelProductItemHTML = `<div class="productItem loader" data-variant-id="${getVariantId}">

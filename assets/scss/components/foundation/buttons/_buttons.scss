@@ -16,10 +16,10 @@
     border-radius:0px;
 
     &.button--secondary{
-        border-color:#ffffff;
-        color: #ffffff;
+        border-color:stencilColor("button--primary-color");
+        color: stencilColor("button--primary-color");
         &:hover{
-            background-color: #ffffff;
+            background-color: stencilColor("button--primary-color");
             color: stencilColor("color-primary");
         }
     }

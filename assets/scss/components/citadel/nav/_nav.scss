@@ -38,7 +38,9 @@
 .navList-action--checkbox {
     @include checkRadioBase();
     @include checkBox-base();
-
+    .productCount{
+        color: stencilColor("button--primary-backgroundColor");
+    }
     &::before,
     &::after {
         top: 50%; // 1

@@ -2,13 +2,31 @@
 // ACTION BAR (CSS)
 // =============================================================================
 
+.categoryActionHeader{
+    border-bottom: container("border");
+    .pagination-list{
+        margin-bottom: 1rem;
+    }
+}
+
+.categoryActionFooter{
+    border-top: container("border");
+    .pagination-list{
+        margin-top: 1rem;
+    }
+}
+
+.actionBar{
+    margin: 0 0 3rem 0;
+}
 
 .actionBar-section {
+    float:right;
     .form-field {
         background-color: $input-bg-color;
         border: $actionBar-form-field-border;
         border-radius: $actionBar-form-field-radius;
-
+        margin-bottom: 0;
         &:hover {
             border-color: stencilColor("input-border-color-active");
         }

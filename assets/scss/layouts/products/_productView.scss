@@ -112,9 +112,19 @@
 .productView-relatedProducts{
     padding-left: 0;
     padding-right: 0;
+    padding-top: spacing("double");
      @include breakpoint("medium") {
         padding-left: spacing("base");
         padding-right: spacing("base");
+        padding-top: spacing("double") + spacing("double");
+    }
+    .productView-title{
+        /*max-width: 1160px;*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .slick-track{
+        max-width: 100% !important;
     }
 }
 

@@ -2,8 +2,9 @@
 // FACET LABEL (Settings)
 // =============================================================================
 
-$facetLabel-backgroundColor:                container("fill", "dark");
+$facetLabel-backgroundColor:                stencilColor("button--primary-backgroundColor");
+$facetLabel-backgroundColorHover:           stencilColor("button--primary-backgroundColorHover");
 $facetLabel-borderRadius:                   4px;
 $facetLabel-removeIcon-width:               14px;
 $facetLabel-removeIcon-height:              14px;
-$facetLabel-removeIcon-color:               $small-font-color;
+$facetLabel-removeIcon-color:               stencilColor("button--primary-color");
