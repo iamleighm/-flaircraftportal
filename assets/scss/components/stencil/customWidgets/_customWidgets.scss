@@ -392,13 +392,13 @@
 }
 
 body.customer-logged-in{
-    .display-guest{
+    .hero-section.display-guest{
         display:none;
     }
 }
 
 body.customer-guest{
-    .display-logged-in{
+    .hero-section.display-logged-in{
         display:none;
     }
 }
