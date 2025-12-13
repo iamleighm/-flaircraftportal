@@ -608,6 +608,9 @@ body.customer-guest{
 
 /* Rich-text Widget */
 .widget-template.rich-text-widget{
+    &:not(.width-100){
+        margin: auto !important;
+    }
     .container{
         .rich-text-wrapper{
             p,div,h1,h2,h3,h4,h5,h6,ul,ol,pre,table{
