@@ -299,12 +299,14 @@
             {{#if theme_settings.show_custom_fields_tabs '!==' true}}
             <div class="productView-info-customfields">
                 <h4 class="productView-info-customfields-Title">Specifications:</h4>
+                {{!--
                 {{#if product.upc}}
                     <div class="productView-info-item productView-info-upc">
                         <dt class="productView-info-name upc-label"{{#unless product.upc}} style="display: none;"{{/unless}}>{{lang 'products.upc'}}</dt>
                         <dd class="productView-info-value" data-product-upc>{{product.upc}}</dd>
                     </div>
                 {{/if}}
+                --}}
                 {{> components/products/custom-fields }}
             </div>
             {{/if}}
