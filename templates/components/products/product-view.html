@@ -102,6 +102,16 @@
                     <span class="productView-info-name sku-label"{{#unless product.sku}} style="display: none;"{{/unless}}>{{lang 'products.sku'}}</span>
                     <span class="productView-info-value" data-product-sku>{{product.sku}}</span>
                 </div>
+
+                {{#each product.custom_fields}}
+                    {{#if (dashcase name) '===' "ean"}}
+                        <div class="product-SKU productView-info-item--{{dashcase name}}">
+                            <dt class="productView-info-name">Bardcode:</dt>
+                            <dd class="productView-info-value">{{{value}}}</dd>
+                        </div>
+                    {{/if}}
+                {{/each}}
+
                 <!--
                 {{#if product.brand}}
                     <h2 class="productView-brand">
