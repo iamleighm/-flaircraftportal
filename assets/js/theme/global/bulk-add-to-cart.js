@@ -115,6 +115,9 @@ export default function ($scope, context) {
                 } else {
                     //console.log(" utils.api.productAttributes.optionChange:", response);
                     var getVariantStock = response.data.stock;
+                    if(getVariantStock === null){
+                        getVariantStock = 0;
+                    }
                     var getVariantSKU = response.data.sku;
 
                     /* Bulk AddtoCart Form */
@@ -212,11 +215,11 @@ export default function ($scope, context) {
                     /* Get Bigcommerce Default Image */
                     //getVariantImage = document.querySelector('.productView-image[data-default-image-url]').getAttribute('data-default-image-url');
                     /* Get Main Product Image */
-                    getVariantImage = document.querySelector('.productView-thumbnails img').getAttribute('data-srcset').split('?c=1')[0];
+                    //getVariantImage = document.querySelector('.productView-thumbnails img').getAttribute('data-srcset').split('?c=1')[0];
                 }
                 var modelProductItemHTML = ``;
                 modelProductItemHTML = `<div class="productItem loader" data-variant-id="${getVariantId}">
-                    <div class="productImage">
+                    <div class="productImage" style="display:none;">
                         <img src="${getVariantImage}" alt="${radio.getAttribute('data-image-alt')}" />
                     </div>
                     <div class="productInfo">
