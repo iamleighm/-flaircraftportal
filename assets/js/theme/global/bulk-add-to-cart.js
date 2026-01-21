@@ -2,6 +2,7 @@ import 'foundation-sites/js/foundation/foundation';
 import 'foundation-sites/js/foundation/foundation.dropdown';
 import utils from '@bigcommerce/stencil-utils';
 import modalFactory, { alertModal, showAlertModal } from '../global/modal';
+import setTimeout from 'core-js/library/fn/set-timeout';
 
 export default function ($scope, context) {
 
@@ -51,8 +52,6 @@ export default function ($scope, context) {
             var bulkAddtoCartButton = document.querySelector('#BulkaddToCart');
             // Move wishlist button next to bulk add to cart button, preserving events
             bulkAddtoCartButton.parentNode.insertBefore(getWishlistBtn, bulkAddtoCartButton.nextSibling);
-
-
         }
 
         document.querySelectorAll('.form-option-wrapper').forEach(formOptionWrapper => {
@@ -274,22 +273,22 @@ export default function ($scope, context) {
                 return showAlertModal(tmp.textContent || tmp.innerText);
             }
             else if(quantityToAdd > 0 && quantityToAdd <= getVariantStock && quantityAlreadyInCart == null && getCartItemId == null){
-                console.log('Adding item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
+                //console.log('Adding item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
                 quickCheckoutModalAnchor.click();
 
                 return function() {
                     return $.get("/cart.php?action=add&product_id=" + getVariantId + "&qty=" + quantityToAdd + "&sku=" + getVariantSKU)
                         .done(function(data, status, xhr) {
-                            console.log('item complete with status ' + status);
+                            //console.log('item complete with status ' + status);
                             removeLoaderfromModalItem(getVariantId);
                         })
                         .fail(function(xhr, status, error) {
-                            console.log('oh noes, error with status ' + status + ' and error: ');
+                            //console.log('oh noes, error with status ' + status + ' and error: ');
                             console.error(error);
                         });
                 };
             } else if(quantityToAdd <= getVariantStock && quantityAlreadyInCart !== null && getCartItemId !== null && quantityToAdd !== quantityAlreadyInCart){
-                console.log('Modify item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
+                //console.log('Modify item to cart: getVariantSKU: ', getVariantSKU , 'getVariantId: ' , getVariantId, ' quantityToAdd:', quantityToAdd);
                 // remove item and add again in cart with updated quanity in cart
                 quickCheckoutModalAnchor.click();
 
@@ -347,16 +346,16 @@ export default function ($scope, context) {
             /* Check if cart has this item, get qty */
             if($cardId){
                 utils.api.cart.getCart({}, (err, response) => {
-                    console.log('utils.api.cart.getCart:',response.lineItems);
+                    //console.log('utils.api.cart.getCart:',response.lineItems);
 
                     var getCartItems = response.lineItems.physicalItems;
                     getCartItems.forEach(item => {
                         var getCartSku = item.sku;
                         if(document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]')){
-                            console.log("Cart SKU:", item.sku, " Cart Item Qty:", item.quantity);
+                            //console.log("Cart SKU:", item.sku, " Cart Item Qty:", item.quantity);
                             var getVariantInput = document.querySelector('.bulk-option-form input[data-sku="'+getCartSku+'"]');
                             getVariantInput.setAttribute('data-cart-qty', item.quantity);
-                            console.log(getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]'));
+                            //console.log(getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]'));
                             getVariantInput.parentElement.querySelector('input[name="bulk-quantity"]').value = item.quantity;
                             getVariantInput.setAttribute('data-cart-itemid', item.id);
                         }
@@ -368,13 +367,32 @@ export default function ($scope, context) {
             else{
                 document.querySelectorAll('.form-option-wrapper.loader').forEach(formWrapper => {
                     formWrapper.classList.remove('loader');
+                    b2b_button_relocation();
                 });
             }
         }).then(() => {
             document.querySelectorAll('.form-option-wrapper.loader').forEach(formWrapper => {
                 formWrapper.classList.remove('loader');
+                b2b_button_relocation();
             });
         });
     }
 
+}
+
+function b2b_button_relocation() { 
+    setTimeout(() => {
+        var b2b_add_to_cart_quote_button = document.querySelector('.add-to-cart-buttons .b2b-add-to-quote');
+        if (b2b_add_to_cart_quote_button) {
+            var bulkAddtoCartButton = document.querySelector('#BulkaddToCart');
+            // Move b2b add to list button next to bulk add to cart button, preserving events
+            bulkAddtoCartButton.parentNode.insertBefore(b2b_add_to_cart_quote_button, bulkAddtoCartButton.nextSibling);
+        }
+        var b2b_add_to_cart_list_button = document.querySelector('.add-to-cart-buttons .b2b-add-to-list');
+        if (b2b_add_to_cart_list_button) {
+            var bulkAddtoCartButton = document.querySelector('#BulkaddToCart');
+            // Move b2b add to list button next to bulk add to cart button, preserving events
+            bulkAddtoCartButton.parentNode.insertBefore(b2b_add_to_cart_list_button, bulkAddtoCartButton.nextSibling);
+        }
+    }, 1000);
 }

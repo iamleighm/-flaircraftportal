@@ -139,8 +139,19 @@
     }
     .custom-add-to-cart-button{
         display: flex;
+        flex-direction: column;
+        max-width: 310px;
         #BulkaddToCart{
             margin-right: 10px;
+        }
+        .button{
+            margin-top: 0 !important;
+            margin-left: 0;
+            border-radius: 0;
+        }
+        .button,
+        #BulkaddToCart{
+            margin-bottom: 8px;
         }
         .form-wishlist{
             margin: 0;

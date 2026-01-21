@@ -456,13 +456,14 @@
         }
 
         .button {
+            border-radius: 0;
             margin: 0;
             width: 100%;
         }
     }
 
     .add-to-cart-wallet-buttons {
-        margin-top: spacing("half");
+        /*margin-top: spacing("half");*/
 
         div[data-smart-button-container-id] {
             line-height: 0;
