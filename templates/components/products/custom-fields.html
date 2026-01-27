@@ -4,16 +4,18 @@
             {{#if (dashcase name) '!==' "product-type"}}
                 {{#if (dashcase name) '!==' "item-group-exact"}}
                     {{#if (dashcase name) '!==' "income-account"}}
-                        <div class="productView-info-item productView-info-item--{{dashcase name}}">
-                            <dt class="productView-info-name">
-                                {{#if (dashcase name) '===' "ean"}}
-                                    Barcode:
-                                {{else}}
-                                    {{name}}:
+                        {{#if (dashcase name) '!==' "ean"}}
+                            {{#if (dashcase name) '!==' "gender"}}
+                                {{#if (dashcase name) '!==' "collection"}}
+                                    <div class="productView-info-item productView-info-item--{{dashcase name}}">
+                                        <dt class="productView-info-name">
+                                            {{name}}:
+                                        </dt>
+                                        <dd class="productView-info-value">{{{value}}}</dd>
+                                    </div>
                                 {{/if}}
-                            </dt>
-                            <dd class="productView-info-value">{{{value}}}</dd>
-                        </div>
+                            {{/if}}
+                        {{/if}}
                     {{/if}}
                 {{/if}}
             {{/if}}

@@ -2,7 +2,7 @@ import 'foundation-sites/js/foundation/foundation';
 import 'foundation-sites/js/foundation/foundation.dropdown';
 import utils from '@bigcommerce/stencil-utils';
 import modalFactory, { alertModal, showAlertModal } from '../global/modal';
-import setTimeout from 'core-js/library/fn/set-timeout';
+// Removed invalid core-js setTimeout import; using native setTimeout
 
 export default function ($scope, context) {
 
