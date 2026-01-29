@@ -78,6 +78,10 @@ body {
 // .optimizedCheckout-contentSecondary styles check boxes' text labels, and lower-level text in the Order Summary.
 // -----------------------------------------------------------------------------
 
+[data-test="cart-shipping"]{
+    display:none;
+}
+
 .optimizedCheckout-contentPrimary {
     color: stencilColor("optimizedCheckout-contentPrimary-color");
     font-family: stencilFontFamily("optimizedCheckout-contentPrimary-font"), Arial, Helvetica, sans-serif;

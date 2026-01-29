@@ -391,16 +391,21 @@
     }
 }
 
-body.customer-logged-in{
-    .hero-section.display-guest{
-        display:none;
+// Always hide .display-guest for logged-in, and .display-logged-in for guest, unless [bis_frame_id] is present
+body.customer-logged-in {
+    &:not([bis_frame_id]) .hero-section.display-guest,
+    &:not([bis_frame_id]) .hero-section.display-guest {
+        display: none;
     }
+    // If [bis_frame_id] is present, do not apply display:none
 }
 
-body.customer-guest{
-    .hero-section.display-logged-in{
-        display:none;
+body.customer-guest {
+    &:not([bis_frame_id]) .hero-section.display-logged-in,
+    &:not([bis_frame_id]) .hero-section.display-logged-in {
+        display: none;
     }
+    // If [bis_frame_id] is present, do not apply display:none
 }
 
 @media (max-width: $screen-large) {
