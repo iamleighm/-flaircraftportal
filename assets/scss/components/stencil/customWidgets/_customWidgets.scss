@@ -249,6 +249,7 @@
                     width: 100%;
                     right: 0;
                     left: 0;
+                    z-index: 1;
                     .heading-title{
                         &.horizontal-line{
                             &:after{
@@ -301,7 +302,7 @@
                         left: 0;
                         width: 100%;
                         height: 100%;
-                        z-index: 0;
+                        z-index: 1;
                         background-color: rgba(0,0,0,.5);
                     }
                 }
@@ -443,6 +444,8 @@ body.customer-guest {
         }
         &.layout2{
             .hero-wrapper{
+                min-height: fit-content;
+                height: auto !important;
                 .hero-content{
                     padding: 30px;
                     display: flex;
@@ -450,6 +453,12 @@ body.customer-guest {
                     align-items: flex-start;
                     justify-content: center;
 
+                }
+                .media-wrapper{
+                     img{
+                        object-fit: cover;
+                        height: 100%;
+                    }
                 }
             }
         }
@@ -492,14 +501,17 @@ body.customer-guest {
         }
         &.layout2{
             .hero-wrapper{
-                height: auto;
                 max-height: fit-content;
                 flex-direction: column;
-                img{
+                .media-wrapper {
                     width: 100%;
-                    flex: 1 1 100%;
-                     height: 350px;
-                    max-height: 350px;
+                    flex: initial;
+                    img{
+                        width: 100%;
+                        flex: 1 1 100%;
+                        height: 350px;
+                        max-height: 350px;
+                    }
                 }
                 .hero-content{
                     width: 100%;
@@ -510,7 +522,7 @@ body.customer-guest {
         }
         &.layout2.right-aligned{
             .hero-wrapper{
-                flex-direction: column-reverse;
+                flex-direction: column;
             }
         }
     }
