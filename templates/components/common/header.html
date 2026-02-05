@@ -10,7 +10,141 @@
     {{/each}}
 </div>
 {{/if}}
-<header class="header" role="banner">
+<header class="header" role="banner" data-customer-group-id="{{customer.customer_group_id}}" data-currency-selector="{{currency_selector.active_currency_code}}">
+<script>
+    async function getBcToken() {
+        try {
+            let response = await fetch('/customer/current.jwt?app_client_id=dl7c39mdpul6hyc489yk0vzxl6jesyx', {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                return data.token;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            return await response;
+
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+
+    async function getB2BToken() {
+        try {
+            const bcCustomerToken = await getBcToken();
+            let response = await fetch('https://api.bundleb2b.net/api/v2/login', {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    'bcToken': bcCustomerToken,
+                    'customerId': {{customer.id}},
+                    'storeHash': '{{settings.store_hash}}',
+                })
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            return await response;
+
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    async function getB3UserId() {
+        try {
+            const authToken = await getB2BToken();
+            
+                if(authToken?.data?.token === undefined){
+                    console.log("B2B User doesn't exist.. Most likely B2C user..");
+                    return null;
+                } 
+
+
+            
+            let response = await fetch('https://api.bundleb2b.net/api/v2/users/{{customer.id}}?isBcId=1', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authToken': authToken.data.token
+                    
+                }
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                return data.data.userId;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+            return await response;
+
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    async function getCompaniesOfUser() {
+        try {
+            const userId = await getB3UserId();
+            
+            if(userId === null){
+                console.log("Didn't receive a B2B User ID, most likely B2C user..");
+                return null;
+            }
+            
+            console.log("User ID:"+userId)
+            const authToken = await getB2BToken();
+            let response =  await fetch(`https://api.bundleb2b.net/api/v2/customers/${userId}/companies`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authToken': authToken.data.token
+                }
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response)
+            })
+            .catch(err => console.error(err));
+
+            return await response;
+
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    {{#if customer}}
+
+    {{#gt customer.customer_group_id 0}}
+
+        console.log("Registered user..");
+        getCompaniesOfUser();
+
+    {{/gt}}
+        
+    {{/if}}
+
+</script>
+    
     <a href="#" class="mobileMenu-toggle" data-mobile-menu-toggle="menu">
         <span class="mobileMenu-toggleIcon">Toggle menu</span>
     </a>

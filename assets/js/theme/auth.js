@@ -52,6 +52,12 @@ export default class Auth extends PageManager {
             this.loginValidator.performCheck();
 
             if (this.loginValidator.areAll('valid')) {
+                // Store user email in sessionStorage for later use
+                const userEmail = $('.login-form input[name="login_email"]').val();
+                if (userEmail) {
+                    sessionStorage.setItem('sessionUserEmail', userEmail);
+                    console.log('✅ Stored user email in sessionStorage:', userEmail);
+                }
                 return;
             }
 
