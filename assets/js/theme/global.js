@@ -28,6 +28,28 @@ export default class Global extends PageManager {
         
         // Check if we need to switch currency
         this.checkAndSwitchCurrency();
+        
+        // Listen for B2B login messages from iframe
+        this.setupB2BMessageListener();
+        
+        setTimeout(() => {
+            this.b2biframeconfig();
+        }, 3000);
+    }
+
+    setupB2BMessageListener() {
+        console.log('🔧 Setting up B2B message listener');
+        
+        window.addEventListener('message', (event) => {
+            // Check if this is a B2B login message
+            if (event.data && event.data.type === 'B2B_LOGIN_EMAIL') {
+                console.log('📧 Received B2B login email from iframe:', event.data.email);
+                sessionStorage.setItem('sessionUserEmail', event.data.email);
+                setTimeout(() => {
+                    //location.reload();
+                }, 1000);
+            }
+        });
     }
 
     async getBcToken() {
@@ -59,7 +81,7 @@ export default class Global extends PageManager {
             const bcCustomerToken = await this.getBcToken();
             
             // Get data from DOM attributes since context might not be available
-            const customerId = $('header').attr('data-customer-id') || $('meta[name="customer-id"]').attr('content');
+            const customerId = $('meta[name="customer-id"]').attr('content');
             const storeHash = $('meta[name="store-hash"]').attr('content') || 'default';
             const channelId = $('meta[name="channel-id"]').attr('content') || '1';
             
@@ -105,7 +127,7 @@ export default class Global extends PageManager {
             } 
 
             // Get customer ID from DOM since context might not be available
-            const customerId = $('header').attr('data-customer-id') || $('meta[name="customer-id"]').attr('content');
+            const customerId = $('meta[name="customer-id"]').attr('content');
             
             let response = await fetch(`https://api-b2b.bigcommerce.com/api/v2/users/${customerId}?isBcId=1`, {
                 method: 'GET',
@@ -161,6 +183,7 @@ export default class Global extends PageManager {
     }
 
     async checkAndSwitchCurrency() {
+
         const userEmail = sessionStorage.getItem('sessionUserEmail');
         console.log('🔍 Checking currency switch for user:', userEmail);
         
@@ -174,7 +197,7 @@ export default class Global extends PageManager {
         console.log('🧹 Removed sessionUserEmail from sessionStorage');
 
         // Get current storefront currency from DOM
-        const currentCurrency = $('header').attr('data-currency-selector');
+        const currentCurrency = $('meta[name="active-currency-id"]').attr('content');
         console.log('💱 Current Storefront Currency:', currentCurrency);
         
         // Get user's company currency from B2B API
@@ -197,7 +220,7 @@ export default class Global extends PageManager {
             console.log('⚠️ No company currency found, using customer group logic');
             
             // Fallback to customer group logic
-            const customerGroupId = $('header').attr('data-customer-group-id');
+            const customerGroupId = $('meta[name="customer-group-id"]').attr('content');
             console.log('👥 Customer Group ID:', customerGroupId);
             
             if (this.shouldUseUSD(customerGroupId, userEmail)) {
@@ -293,6 +316,42 @@ export default class Global extends PageManager {
         } else {
             console.log(`❌ ${currencyCode} currency link not found`);
             console.log('Available currencies:', $('[data-currency-code]').map((i, el) => $(el).data('currency-code')).get());
+        }
+    }
+
+    b2biframeconfig() {
+        var bundleIframe = document.querySelector('#bundle-container iframe');
+        
+        if (bundleIframe) {
+            var script = document.createElement('script');
+            script.textContent = `
+                // Listen for login form submissions in B2B iframe
+                document.addEventListener('submit', function(event) {
+                console.log('B2B iframe login form submitted');
+                    var form = event.target;
+                    var emailField = form.querySelector('input[type="email"], input[name*="email"], input[name*="login"]');
+                    if (emailField) {
+                        var email = emailField.value;
+                        if (email) {
+                            // Send email to parent window
+                            window.parent.postMessage({
+                                type: 'B2B_LOGIN_EMAIL',
+                                email: email
+                            }, '*');
+                        }
+                    }
+                });
+            `;
+            
+            // Inject script into iframe
+            try {
+                bundleIframe.contentDocument.body.appendChild(script);
+                console.log('✅ Script injected into B2B iframe');
+            } catch (error) {
+                console.log('❌ Could not inject script into B2B iframe:', error);
+            }
+        } else {
+            console.log('❌ B2B iframe not found with selector #bundleIframe iframe');
         }
     }
 }
