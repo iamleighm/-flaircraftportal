@@ -63,6 +63,9 @@
     display: $card-figcaption-body-display;
     pointer-events: all; // 1
     transform: translate3d(0, -50%, 0); // 2
+    button.quickview{
+        width: 100%;
+    }
 }
 
 .card-image {

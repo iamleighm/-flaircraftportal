@@ -6,6 +6,7 @@ import ProductDetails from '../common/product-details';
 import { defaultModal, ModalEvents } from './modal';
 import 'slick-carousel';
 import { setCarouselState, onSlickCarouselChange, onUserCarouselChange } from '../common/carousel';
+import bulkAddToCart from './bulk-add-to-cart';
 
 export default function (context) {
     const modal = defaultModal();
@@ -53,6 +54,9 @@ export default function (context) {
 
             /* eslint-disable no-new */
             new Review({ $context: modal.$content });
+
+            // Initialize bulk add to cart functionality
+            bulkAddToCart(modal.$content, context);
 
             return new ProductDetails(modal.$content.find('.quickView'), context);
         });
