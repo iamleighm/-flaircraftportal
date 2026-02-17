@@ -40,6 +40,9 @@
                         width: 100%;
                         height: auto;
                     }
+                    &[href="#"]{
+                        pointer-events: none;
+                    }
                 }
                 .heading-title{
                     margin: 15px 0 15px 0;
