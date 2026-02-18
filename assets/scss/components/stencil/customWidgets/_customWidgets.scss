@@ -692,4 +692,22 @@ body.customer-guest {
             }
         }
     }
+    &.bold-true{
+        .container{
+            .rich-text-wrapper{
+                .rich-text-content{
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    &.italic-true{
+        .container{
+            .rich-text-wrapper{
+                .rich-text-content{
+                    font-style: italic;
+                }
+            }
+        }
+    }
 }
