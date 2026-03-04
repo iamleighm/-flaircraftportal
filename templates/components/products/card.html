@@ -141,11 +141,11 @@
         </h3>
 
         <div class="card-text" data-test-info-type="price">
-            {{#or customer (unless settings.hide_price_from_guests)}}
+            {{#if customer }}
                 {{> components/products/price price=price}}
             {{else}}
                 {{> components/common/login-for-pricing}}
-            {{/or}}
+            {{/if}}
         </div>
         {{{region name="product_item_below_price"}}}
         {{> components/products/bulk-discount-rates}}

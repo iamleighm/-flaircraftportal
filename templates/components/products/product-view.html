@@ -125,11 +125,11 @@
                     </p>
                 {{/if}}
                 <div class="productView-price">
-                    {{#or customer (unless settings.hide_price_from_guests)}}
+                    {{#if customer }}
                         {{> components/products/price price=product.price}}
                     {{else}}
                         {{> components/common/login-for-pricing}}
-                    {{/or}}
+                    {{/if}}
                 </div>
                 <section class="productView-details product-options">
                     <div class="productView-options">
