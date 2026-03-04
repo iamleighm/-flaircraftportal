@@ -3,11 +3,13 @@ import CatalogPage from './catalog';
 import compareProducts from './global/compare-products';
 import FacetedSearch from './common/faceted-search';
 import { createTranslationDictionary } from './common/utils/translations-utils';
+import QuickAddToCart from './quick-add-to-cart';
 
 export default class Category extends CatalogPage {
     constructor(context) {
         super(context);
         this.validationDictionary = createTranslationDictionary(context);
+        this.quickAddToCart = new QuickAddToCart();
     }
 
     setLiveRegionAttributes($element, roleType, ariaLiveStatus) {

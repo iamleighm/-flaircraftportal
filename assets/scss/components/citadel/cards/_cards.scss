@@ -23,6 +23,12 @@
             opacity: 1;
         }
     }
+
+    &:not([data-v3_variant_id]){
+        .quick-add-to-cart{
+            display: none;
+        }
+    }
 }
 
 .card-figure {
