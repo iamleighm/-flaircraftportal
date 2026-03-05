@@ -174,7 +174,7 @@ export default class QuickAddToCart {
     }
 
     updateQuantitiesFromCart() {
-        console.log('QuickAddToCart: updateQuantitiesFromCart() called');
+        //console.log('QuickAddToCart: updateQuantitiesFromCart() called');
         utils.api.cart.getCart({}, (err, response) => {
             //console.log('utils.api.cart.getCart:',response.lineItems);
             if (err) {
@@ -182,19 +182,18 @@ export default class QuickAddToCart {
                 return;
             }
 
-            console.log('Cart response data:', response.lineItems.physicalItems);
+            //console.log('Cart response data:', response.lineItems.physicalItems);
             
             let cartItems = response.lineItems.physicalItems;
 
             cartItems.forEach(item => {
-                console.log('item: ' , item);
+                //console.log('item: ' , item);
 
                 const productId = item.productId;
                 const quantity = item.quantity;
 
                 if($(`.card[data-entity-id="${productId}"]`)){
                     const $card = $(`.card[data-entity-id="${productId}"]`);
-                    console.log($card);
                     $card.find('.quick-qty-input-field').val(quantity);
                 }
                 
@@ -219,8 +218,8 @@ export default class QuickAddToCart {
             const $decrementBtn = $card.find('.quick-decrement-button');
             const getCurrentQty = parseInt($qtyInput.val()) || 0;
             
-            console.log('Product ID:', productId);
-            console.log('Current Qty:', getCurrentQty + 1);
+            //console.log('Product ID:', productId);
+            //console.log('Current Qty:', getCurrentQty + 1);
             
             // Show loader and disable buttons/input
             $loader.show();
@@ -321,29 +320,29 @@ export default class QuickAddToCart {
             
             // Check if product is in cart
             utils.api.cart.getCart({}, (err, response) => {
+
                 if (err) {
                     console.error('Error getting cart:', err);
-                    $loader.hide();
-                    $qtyInput.prop('disabled', false);
-                    $incrementBtn.prop('disabled', false);
-                    $decrementBtn.prop('disabled', false);
                     return;
                 }
                 
-                // Check if product exists in cart - cart items are now directly in array
-                const cartItems = response || [];
+                
+                // Check if response has physical items
+                if (!response || !response.lineItems || !response.lineItems.physicalItems) {
+                    console.log('Invalid cart response or no physical items in cart');
+                    return;
+                }
+                
+                // Check if product exists in cart - use physicalItems structure
+                const cartItems = response.lineItems.physicalItems;
                 const productInCart = cartItems.find(item => item.productId == productId);
                 
-                console.log('Cart items:', cartItems);
-                console.log('Product in cart:', productInCart);
+                //console.log('Cart items:', cartItems);
+                //console.log('Product in cart:', productInCart);
                 
                 if (!productInCart || productInCart.quantity <= 0) {
                     // Product not in cart, do nothing
                     console.log('Product not in cart, doing nothing');
-                    $loader.hide();
-                    $qtyInput.prop('disabled', false);
-                    $incrementBtn.prop('disabled', false);
-                    $decrementBtn.prop('disabled', false);
                     return;
                 }
                 
@@ -352,16 +351,18 @@ export default class QuickAddToCart {
                 
                 console.log('Removing product from cart and re-adding with quantity:', newQty);
                 
-                // Remove product from cart using the cart item ID
-                utils.api.cart.removeItem(productInCart.id, (removeErr, removeResponse) => {
+                // Remove product from cart using cart item ID
+                utils.api.cart.itemRemove(productInCart.id, (removeErr, removeResponse) => {
                     if (removeErr) {
                         console.error('Error removing item from cart:', removeErr);
-                        $loader.hide();
-                        $qtyInput.prop('disabled', false);
-                        $incrementBtn.prop('disabled', false);
-                        $decrementBtn.prop('disabled', false);
                         return;
                     }
+
+                    // Hide loader and enable controls regardless of outcome
+                    $loader.hide();
+                    $qtyInput.prop('disabled', false);
+                    $incrementBtn.prop('disabled', false);
+                    $decrementBtn.prop('disabled', false);
                     
                     console.log('Item removed from cart');
                     
@@ -372,13 +373,7 @@ export default class QuickAddToCart {
                         // Re-add product with new quantity
                         this.addProductToCart(productId, newQty, $card, $loader, $qtyInput, $incrementBtn, $decrementBtn);
                     } else {
-                        // Quantity is 0, just hide loader and enable controls
-                        $loader.hide();
-                        $qtyInput.prop('disabled', false);
-                        $incrementBtn.prop('disabled', false);
-                        $decrementBtn.prop('disabled', false);
-                        
-                        // Update cart count in header
+                        // Quantity is 0, update cart count in header
                         this.updateCartCount();
                     }
                 });
