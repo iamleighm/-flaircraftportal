@@ -105,10 +105,12 @@
 
                 {{#each product.custom_fields}}
                     {{#if (dashcase name) '===' "ean"}}
+                    <!--
                         <div class="product-SKU productView-info-item--{{dashcase name}}">
                             <dt class="productView-info-name">Bardcode:</dt>
                             <dd class="productView-info-value">{{{value}}}</dd>
                         </div>
+                    -->
                     {{/if}}
                 {{/each}}
 
