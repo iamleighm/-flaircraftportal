@@ -78,6 +78,7 @@ export default class Category extends CatalogPage {
         const $productListingContainer = $('#product-listing-container');
         const $facetedSearchContainer = $('#faceted-search-container');
         const productsPerPage = this.context.categoryProductsPerPage;
+
         const requestOptions = {
             config: {
                 category: {
@@ -102,6 +103,11 @@ export default class Category extends CatalogPage {
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);
+            
+            //console.log('Faceted search applied');
+            // Reinitialize QuickAddToCart when filters are applied
+            this.quickAddToCart.updateQuantitiesFromCart();
+            this.quickAddToCart.processAllCards();
         }, {
             validationErrorMessages: {
                 onMinPriceError,

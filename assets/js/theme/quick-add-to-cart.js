@@ -176,18 +176,24 @@ export default class QuickAddToCart {
     updateQuantitiesFromCart() {
         //console.log('QuickAddToCart: updateQuantitiesFromCart() called');
         utils.api.cart.getCart({}, (err, response) => {
-            //console.log('utils.api.cart.getCart:',response.lineItems);
             if (err) {
                 console.error('Error getting cart:', err);
                 return;
             }
 
-            //console.log('Cart response data:', response.lineItems.physicalItems);
+            //console.log('Cart response:', response);
             
-            let cartItems = response.lineItems.physicalItems;
+            // Check if response is a valid array
+            if (!response || !Array.isArray(response)) {
+                console.log('Invalid cart response or no items in cart');
+                return;
+            }
+            
+            // Cart items are directly in the response array
+            let cartItems = response;
 
             cartItems.forEach(item => {
-                //console.log('item: ' , item);
+                console.log('item: ', item);
 
                 const productId = item.productId;
                 const quantity = item.quantity;
