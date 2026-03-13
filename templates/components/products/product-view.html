@@ -145,19 +145,24 @@
                             {{#if product.cart_order_source}}
                                 <input type="hidden" name="cart_order_source" value="{{product.cart_order_source}}"/>
                             {{/if}}
-                            <div data-product-option-change style="display:none;">
-                                {{inject 'showSwatchNames' theme_settings.show_product_swatch_names}}
-                                {{#each product.options}}
-                                    {{{dynamicComponent 'components/products/options'}}}
-                                {{/each}}
-                            </div>
+                            {{#if customer}}
+                                <div data-product-option-change style="display:none;">
+                                    {{inject 'showSwatchNames' theme_settings.show_product_swatch_names}}
+                                    {{#each product.options}}
+                                        {{{dynamicComponent 'components/products/options'}}}
+                                    {{/each}}
+                                </div>
+                            {{/if}}
+
                             <div class="form-field form-field--stock{{#unless product.stock_level}} u-hiddenVisually{{/unless}}">
                                 <label class="form-label form-label--alternate">
                                     {{lang 'products.current_stock'}}
                                     <span data-product-stock>{{product.stock_level}}</span>
                                 </label>
                             </div>
-                            {{> components/products/add-to-cart with_wallet_buttons=true}}
+                            {{#if customer}}
+                                {{> components/products/add-to-cart with_wallet_buttons=true}}
+                            {{/if}}
                             {{#if product.out_of_stock}}
                                 {{#if product.out_of_stock_message}}
                                     {{> components/common/alert/alert-error product.out_of_stock_message}}
@@ -166,8 +171,10 @@
                                 {{/if}}
                             {{/if}}
                         </form>
-                        {{#if settings.show_wishlist}}
-                            {{> components/common/wishlist-dropdown}}
+                        {{#if customer}}
+                            {{#if settings.show_wishlist}}
+                                {{> components/common/wishlist-dropdown}}
+                            {{/if}}
                         {{/if}}
                     </div>
                 </section>

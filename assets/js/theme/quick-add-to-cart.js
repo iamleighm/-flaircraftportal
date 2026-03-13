@@ -75,7 +75,7 @@ export default class QuickAddToCart {
                 //console.log('Extracted SKU for product', productId, ':', sku);
                 //console.log('productId: ', productId);
                 //console.log('v3_variant_id: ', v3_variant_id);
-                card.querySelector('[data-test-info-type="brandName"]').append(v3_variant_id);
+                card.querySelector('[data-test-info-type="brandName"]').append(' - ',sku);
 
                 // Store first variant SKU on the card
                 if (v3_variant_id) {

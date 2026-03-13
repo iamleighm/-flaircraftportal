@@ -94,9 +94,11 @@
                     {{#if pre_order}}
                         <a href="{{pre_order_add_to_cart_url}}" data-event-type="product-click" class="button button--small card-figcaption-button">{{lang 'products.pre_order'}}</a>
                     {{/if}}
-                    {{#if add_to_cart_url }}
-                        <a href="{{add_to_cart_url}}" data-event-type="product-click" data-button-type="add-cart" class="button button--small card-figcaption-button">{{lang 'products.add_to_cart'}}</a>
-                        <span class="product-status-message aria-description--hidden">{{lang 'category.add_cart_announcement'}}</span>
+                    {{#if customer }}
+                        {{#if add_to_cart_url }}
+                            <a href="{{add_to_cart_url}}" data-event-type="product-click" data-button-type="add-cart" class="button button--small card-figcaption-button">{{lang 'products.add_to_cart'}}</a>
+                            <span class="product-status-message aria-description--hidden">{{lang 'category.add_cart_announcement'}}</span>
+                        {{/if}}
                     {{/if}}
                     {{#if out_of_stock_message }}
                         <a href="{{url}}" data-event-type="product-click" class="button button--small card-figcaption-button" data-product-id="{{id}}">{{out_of_stock_message}}</a>
@@ -106,21 +108,23 @@
         </figcaption>
     </figure>
     <div class="card-body">
-        <div class="quick-add-to-cart">
-            <div class="quick-add-to-cart-content">
-                <div class="quick-decrement">
-                    <button class="quick-decrement-button">-</button>
+        {{#if customer}}
+            <div class="quick-add-to-cart">
+                <div class="quick-add-to-cart-content">
+                    <div class="quick-decrement">
+                        <button class="quick-decrement-button">-</button>
+                    </div>
+                    <div class="quick-qty-input">
+                        <input type="number" class="quick-qty-input-field" value="0" data-product-id="{{id}}">
+                    </div>
+                    <div class="quick-increment">
+                        <button class="quick-increment-button">+</button>
+                    </div>
                 </div>
-                <div class="quick-qty-input">
-                    <input type="number" class="quick-qty-input-field" value="0" data-product-id="{{id}}">
-                </div>
-                <div class="quick-increment">
-                    <button class="quick-increment-button">+</button>
-                </div>
+                <div class="quick-loader" style="display: none;"></div>
+                <div class="quick-message"></div>
             </div>
-            <div class="quick-loader" style="display: none;"></div>
-            <div class="quick-message"></div>
-        </div>
+        {{/if}}
         {{#and rating show_rating}}
             <p class="card-text" data-test-info-type="productRating">
                 <span class="rating--small">
