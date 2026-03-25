@@ -181,7 +181,7 @@ export default class QuickAddToCart {
                 return;
             }
 
-            //console.log('Cart response:', response);
+            console.log('Cart response:', response);
             
             // Check if response is a valid array
             if (!response || !Array.isArray(response)) {
@@ -433,12 +433,30 @@ export default class QuickAddToCart {
     }
 
     updateCartCount() {
-        // Update cart count in header
-        const $cartCount = $('.cart-count');
-        if ($cartCount.length > 0) {
-            const currentCount = parseInt($cartCount.text()) || 0;
-            $cartCount.text(currentCount + 1);
-        }
+        // Update cart count natively using BigCommerce's cart API
+        utils.api.cart.getCart({}, (err, response) => {
+            if (err) {
+                console.error('Error getting cart for count update:', err);
+                return;
+            }
+            
+            // Calculate total quantity from cart items
+            let totalQuantity = 0;
+            if (response && Array.isArray(response)) {
+                response.forEach(item => {
+                    totalQuantity += item.quantity || 0;
+                });
+            }
+            
+            // Update cart count elements
+            const $cartCount = $('.cart-count');
+            if ($cartCount.length > 0) {
+                $cartCount.text(totalQuantity);
+            }
+            
+            // Also update any other cart count indicators
+            $('[data-cart-quantity]').text(totalQuantity);
+        });
     }
 
     showSuccessMessage($container) {
