@@ -21,7 +21,12 @@ export default class Cart extends PageManager {
         this.$activeCartItemBtnAction = null;
 
         this.setApplePaySupport();
+        this.emptyCartItems();
         this.bindEvents();
+    }
+
+    emptyCartItems(){
+        console.log('emptyCartItems');
     }
 
     setApplePaySupport() {

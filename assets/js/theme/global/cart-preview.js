@@ -41,16 +41,26 @@ export default function (secureBaseUrl, cartId) {
         var totalElements = cartPreviewDropdown.querySelectorAll('.previewCartList .previewCartItem');
         var totalCost = 0;
         totalElements.forEach(element => {
+            //console.log('new product found ------------------');
+
+            var multiplier = 0;
+            var orgPriceWrapper = element.querySelector('.previewCartItem-price').textContent;
+            var orgPriceContent = element.querySelector('.previewCartItem-price span').textContent;
+            //console.log('orgPriceContent:', orgPriceContent);
+
+            var productPriceRemoveDollar = orgPriceContent.replace('$', '');
+            var productPriceRemoveCommas = parseFloat(productPriceRemoveDollar.replace(',', '')).toFixed(2);
+            //console.log('productPriceRemoveCommas:', productPriceRemoveCommas);
+
+            orgPriceContent = productPriceRemoveCommas;
             //console.log(element.querySelector('.previewCartItem-price').textContent.trim());
-            if(element.querySelector('.previewCartItem-price').textContent.trim().indexOf('×') > -1) {
-                //console.log('has x');
-                var multiplier = parseInt(element.querySelector('.previewCartItem-price').textContent.trim().split('×')[0]);
-                totalCost += parseFloat(element.querySelector('.previewCartItem-price span').textContent.replace('$', '')) * multiplier;
+            if(orgPriceWrapper.trim().indexOf('×') > -1) {
+                multiplier = parseFloat(orgPriceWrapper.trim().split('×')[0]).toFixed(2);
+                totalCost += parseFloat(orgPriceContent) * multiplier;
             }
             else{
-                totalCost += parseFloat(element.querySelector('.previewCartItem-price span').textContent.replace('$', ''));
+                totalCost += parseFloat(orgPriceContent);
             }
-            
         });
         //console.log('getTotal:', totalCost);
         if(totalCost > 0){
