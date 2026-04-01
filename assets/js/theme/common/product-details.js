@@ -446,7 +446,7 @@ export default class ProductDetails extends ProductDetailsBase {
 
             // Open preview modal and update content
             if (this.previewModal) {
-                this.previewModal.open();
+                //this.previewModal.open();
 
                 if (window.ApplePaySession) {
                     this.previewModal.$modal.addClass('apple-pay-supported');
@@ -458,7 +458,7 @@ export default class ProductDetails extends ProductDetailsBase {
 
                 this.updateCartContent(this.previewModal, response.data.cart_item.id);
             } else {
-                this.$overlay.show();
+                //this.$overlay.show();
                 // if no modal, redirect to the cart page
                 this.redirectTo(response.data.cart_item.cart_url || this.context.urls.cart);
             }

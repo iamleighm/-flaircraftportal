@@ -670,6 +670,18 @@ $card-preview-zoom-bottom-offset:       6rem;
         padding-right: spacing("half");
         width: 100%;
     }
+
+    .cartTotalElement{
+        display: flex;
+        justify-content: space-between;
+        @include breakpoint("xxsmall") {
+            padding: 0 spacing("quarter") spacing("half") spacing("quarter");
+        }
+
+        @include breakpoint("xsmall") {
+            padding: 0 spacing("half") spacing("single") spacing("half");
+        }
+    }
 }
 
 .previewCartAction-checkout,

@@ -36,6 +36,35 @@ export default function (secureBaseUrl, cartId) {
         }
     });
 
+    function getTotal(){
+        var cartPreviewDropdown = document.getElementById('cart-preview-dropdown');
+        var totalElements = cartPreviewDropdown.querySelectorAll('.previewCartList .previewCartItem');
+        var totalCost = 0;
+        totalElements.forEach(element => {
+            //console.log(element.querySelector('.previewCartItem-price').textContent.trim());
+            if(element.querySelector('.previewCartItem-price').textContent.trim().indexOf('×') > -1) {
+                //console.log('has x');
+                var multiplier = parseInt(element.querySelector('.previewCartItem-price').textContent.trim().split('×')[0]);
+                totalCost += parseFloat(element.querySelector('.previewCartItem-price span').textContent.replace('$', '')) * multiplier;
+            }
+            else{
+                totalCost += parseFloat(element.querySelector('.previewCartItem-price span').textContent.replace('$', ''));
+            }
+            
+        });
+        //console.log('getTotal:', totalCost);
+        if(totalCost > 0){
+            // Update the cart total in the header
+            var cartTotalElement = `<div class="cartTotalElement"><div class="label">Grand total:</div><div class="amount">$${totalCost.toFixed(2)}</div></div>`;
+            var targetElement = cartPreviewDropdown.querySelector('.previewCartAction');
+            //console.log('cartTotalElement: ', cartTotalElement);
+            //console.log('targetElement: ', targetElement);
+            if(targetElement && targetElement.querySelector('.cartTotalElement') === null){
+                targetElement.insertAdjacentHTML('afterbegin', cartTotalElement);
+            }
+        }
+    }
+
     $cart.on('click', event => {
         const options = {
             template: 'common/cart-preview',
@@ -63,7 +92,10 @@ export default function (secureBaseUrl, cartId) {
                 .html(response);
             $cartLoading
                 .hide();
+            getTotal();
         });
+
+
     });
 
     let quantity = 0;
