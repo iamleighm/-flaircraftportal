@@ -529,6 +529,12 @@ $card-preview-zoom-bottom-offset:       6rem;
     margin-bottom: 1em;
 }
 
+.clear-cart-wrapper{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom:10px;
+}
+
 .cart-actions {
     @include clearfix;
     clear: both;
@@ -541,6 +547,10 @@ $card-preview-zoom-bottom-offset:       6rem;
             display: inline-block;
             float: right;
         }
+    }
+
+    .button--clear-cart{
+        margin-left:10px;
     }
 
     .checkoutMultiple {

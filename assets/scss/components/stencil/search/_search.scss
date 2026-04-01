@@ -24,21 +24,24 @@
 }
 
 .quickSearchResults {
-    margin-top: 0;
+    margin-top: -0;
     width: 100%;
     min-width: 100%;
     position: relative;
     background-color: #ffffff;
     color: stencilColor("navUser-topbar-color");
+    border:1px solid stencilColor('input-border-color');
+    border-top:none;
 
     @include breakpoint("medium") {
-        margin-top: 0;
+        margin-top: -2px;
         width: 100%;
         position: absolute;
         left: 0;
         top: 100%;
         max-height: 500px;
         overflow: auto;
+        z-index:-1;
     }
 
     .modal-close {
@@ -98,8 +101,8 @@
 }
 
 .quickSearchMessage {
-    font-size: fontSize("largest");
-    margin: spacing("single") 0 0;
+    font-size: fontSize("small");
+    margin: spacing("single") 0 spacing("single") 0;
     text-align: center;
     color: stencilColor("color-primaryDarker");
 }
