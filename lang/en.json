@@ -47,7 +47,6 @@
                 "or": "or"
             },
             "button": "Check out",
-            "clear_cart": "Clear Cart",
             "empty_cart": "Your cart is empty",
             "title": "Click here to proceed to checkout",
             "item": "Item",
