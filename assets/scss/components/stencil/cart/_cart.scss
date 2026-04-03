@@ -216,35 +216,6 @@ $card-preview-zoom-bottom-offset:       6rem;
     }
 }
 
-.cart-item-quantity {
-    .form-increment {
-        display: inline-block;
-        margin: 0 spacing("eighth") 1px spacing("single");
-        vertical-align: middle;
-        border:1px solid stencilColor("input-border-color");
-
-        @include breakpoint("medium") {
-            margin-left: 0;
-        }
-
-        .button{
-           padding: remCalc(5px) remCalc(5px);
-        }
-
-        [data-action="dec"]{
-            border-top: none;
-            border-bottom: none;
-            border-left: none;
-        }
-        [data-action="inc"]{
-            border-top: none;
-            border-bottom: none;
-            border-right: none;
-        }
-    }
-
-}
-
 .cart-item-label {
     color: stencilColor("color-textBase");
     float: left;

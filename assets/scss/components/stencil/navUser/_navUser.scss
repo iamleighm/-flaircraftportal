@@ -445,7 +445,43 @@
             padding: spacing("double") 0 0;
         }
         .product{
-            width: grid-calc(6, $total-columns);
+            //width: grid-calc(6, $total-columns);
+            width:100%;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            .card{
+                margin-bottom: 0;
+                border:none;
+                display: flex;
+                flex-direction: row;
+                .card-img-container{
+                    height: 70px;
+                    width: 80px;
+                }
+                .card-body{
+                    padding: 0;
+                }
+                .card-text[data-test-info-type="price"]{
+                    p{
+                        margin-bottom: 0;
+                    }
+                }
+
+                &:hover{
+                    border:none;
+                    .card-body{
+                        background:none;
+                    }
+                    .card-text{
+                        color: #757575;
+                    }
+                    .card-title{
+                        a{
+                            color: $card-title-color;
+                        }
+                    }
+                }
+            }
         }
     }
 }
