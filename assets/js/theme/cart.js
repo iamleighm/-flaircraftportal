@@ -21,12 +21,51 @@ export default class Cart extends PageManager {
         this.$activeCartItemBtnAction = null;
 
         this.setApplePaySupport();
-        this.emptyCartItems();
+        this.emptyCartConfig();
         this.bindEvents();
     }
 
-    emptyCartItems(){
-        console.log('emptyCartItems');
+    emptyCartConfig(){
+        var emptyCardButton = $('[data-cart-remove-all]');
+        console.log('emptyCardButton:', emptyCardButton);
+        emptyCardButton.on('click', (e) => {
+            e.preventDefault();
+            this.emptyCartItems();
+        });
+    }
+
+    async emptyCartItems(){
+        var emptyCardButton = $('[data-cart-remove-all]');
+        emptyCardButton.addClass('loader');
+        return utils.api.cart.getCart({}, async (err, response) => {
+            //console.log('utils.api.cart.getCart:',response.lineItems);
+            var getCartItems = response.lineItems.physicalItems;
+            
+            for (const item of getCartItems) {
+                var itemCartItemId = item.id;
+                //console.log('itemCartItemId: ' , itemCartItemId);
+                await this.removeItemFromCart(itemCartItemId);
+            }
+            
+            //console.log('All items removed, reloading page...');
+            //emptyCardButton.removeClass('loader');
+            window.location.reload();
+        });
+    }
+
+    removeItemFromCart(itemCartItemId){
+        //console.log('removeItemFromCart itemCartItemId: ' , itemCartItemId);
+        return new Promise((resolve, reject) => {
+            utils.api.cart.itemRemove(itemCartItemId, (err, response) => {
+                if (err) {
+                    console.error('Error removing cart item:', err);
+                    reject(err);
+                } else {
+                    console.log('Cart item removed:', response);
+                    resolve(response);
+                }
+            });
+        });
     }
 
     setApplePaySupport() {

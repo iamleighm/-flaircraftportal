@@ -11,11 +11,10 @@ cart: true
 
         {{> components/cart/page-title}}
 
-<!--
         <div class="clear-cart-wrapper">
-            <a href="#" title="Empty all items from your shopping cart" id="EmptyCart" class="btn alt">Clear Cart</a>
+            <a href="#" title="Empty all items from your shopping cart" data-cart-remove-all id="EmptyCart" class="btn alt">Clear Cart</a>
         </div>
--->
+
         <div data-cart-status>
             {{> components/cart/status-messages}}
         </div>
