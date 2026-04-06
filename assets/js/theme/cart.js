@@ -43,17 +43,38 @@ export default class Cart extends PageManager {
         var emptyCardButton = $('[data-cart-remove-all]');
         emptyCardButton.addClass('loader');
         return utils.api.cart.getCart({}, async (err, response) => {
-            //console.log('utils.api.cart.getCart:',response.lineItems);
-            var getCartItems = response.lineItems.physicalItems;
+            if (err) {
+                console.error('Error getting cart:', err);
+                emptyCardButton.removeClass('loader');
+                return;
+            }
+
+            // Handle different response structures
+            var getCartItems = [];
+            if (response && response.lineItems && response.lineItems.physicalItems) {
+                getCartItems = response.lineItems.physicalItems;
+            } else if (response && Array.isArray(response)) {
+                getCartItems = response;
+            } else if (response && response.length > 0) {
+                getCartItems = response;
+            }
+
+            console.log('Cart items found:', getCartItems.length);
+            
+            if (getCartItems.length === 0) {
+                console.log('Cart is already empty');
+                emptyCardButton.removeClass('loader');
+                window.location.reload();
+                return;
+            }
             
             for (const item of getCartItems) {
                 var itemCartItemId = item.id;
-                //console.log('itemCartItemId: ' , itemCartItemId);
+                console.log('itemCartItemId: ' , itemCartItemId);
                 await this.removeItemFromCart(itemCartItemId);
             }
             
-            //console.log('All items removed, reloading page...');
-            //emptyCardButton.removeClass('loader');
+            console.log('All items removed, reloading page...');
             window.location.reload();
         });
     }

@@ -173,41 +173,50 @@ export default class QuickAddToCart {
         }
     }
 
-    updateQuantitiesFromCart() {
+    async updateQuantitiesFromCart() {
         //console.log('QuickAddToCart: updateQuantitiesFromCart() called');
-        utils.api.cart.getCart({}, (err, response) => {
+        return utils.api.cart.getCart({}, async (err, response) => {
             if (err) {
                 console.error('Error getting cart:', err);
                 return;
             }
 
+            // Handle different response structures
+            var getCartItems = [];
+            if (response && response.lineItems && response.lineItems.physicalItems) {
+                getCartItems = response.lineItems.physicalItems;
+            } else if (response && Array.isArray(response)) {
+                getCartItems = response;
+            } else if (response && response.length > 0) {
+                getCartItems = response;
+            }
+
+            console.log('getCartItems:', getCartItems);
             console.log('Cart response:', response);
             
-            // Check if response is a valid array
-            if (!response || !Array.isArray(response)) {
-                console.log('Invalid cart response or no items in cart');
+            if (getCartItems.length === 0) {
+                console.log('No items in cart');
                 return;
             }
             
-            // Cart items are directly in the response array
-            let cartItems = response;
-
-            cartItems.forEach(item => {
-                console.log('item: ', item);
+            // Process items sequentially with await
+            for (const item of getCartItems) {
+                console.log('Processing item:', item);
 
                 const productId = item.productId;
                 const quantity = item.quantity;
 
                 if($(`.card[data-entity-id="${productId}"]`)){
                     const $card = $(`.card[data-entity-id="${productId}"]`);
-                    $card.find('.quick-qty-input-field').val(quantity);
+                    await new Promise(resolve => {
+                        $card.find('.quick-qty-input-field').val(quantity);
+                        resolve(); // Ensure the value is set before continuing
+                    });
                 }
-                
-            });
-
-            return;
-
-        });            
+            }
+            
+            console.log('All quantities updated');
+        });
     }
 
     bindEvents() {
@@ -227,14 +236,23 @@ export default class QuickAddToCart {
             //console.log('Product ID:', productId);
             //console.log('Current Qty:', getCurrentQty + 1);
             
-            // Show loader and disable buttons/input
-            $loader.show();
-            $qtyInput.prop('disabled', true);
-            $incrementBtn.prop('disabled', true);
-            $decrementBtn.prop('disabled', true);
-            
-            // Increment the quantity
-            $qtyInput.val(getCurrentQty + 1);
+
+            function enableLoader(){
+                // Show loader and disable buttons/input
+                $loader.show();
+                $qtyInput.prop('disabled', true);
+                $incrementBtn.prop('disabled', true);
+                $decrementBtn.prop('disabled', true);     
+            }
+            function disableLoader(){
+                // Hide loader and enable buttons/input
+                $loader.hide();
+                $qtyInput.prop('disabled', false);
+                $incrementBtn.prop('disabled', false);
+                $decrementBtn.prop('disabled', false);
+            }
+
+            enableLoader();
             
             // Get SKU using utils.api.productAttributes method
             const formData = {
@@ -244,12 +262,13 @@ export default class QuickAddToCart {
             };
             
             utils.api.productAttributes.optionChange(productId, formData, (err, response) => {
-                // Hide loader and enable buttons/input
-                $loader.hide();
-                $qtyInput.prop('disabled', false);
-                $incrementBtn.prop('disabled', false);
-                $decrementBtn.prop('disabled', false);
-                
+
+                if (response.data.instock == false) {
+                    console.error('Product is out of stock');
+                    disableLoader();
+                    return;
+                }
+
                 if (err) {
                     console.error('Error getting product attributes:', err);
                     return;
@@ -284,6 +303,10 @@ export default class QuickAddToCart {
                 // Add product to cart via GET request
                 return $.get("/cart.php?action=add&product_id=" + productId + "&qty=1&sku=" + sku)
                     .done((data, status, xhr) => {
+                        disableLoader();
+                        // Increment the quantity
+                        $qtyInput.val(getCurrentQty + 1);
+
                         console.log('Product added to cart with status ' + status);
                         // Update cart count in header
                         this.updateCartCount();
