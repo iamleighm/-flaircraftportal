@@ -27,7 +27,12 @@ export default class Cart extends PageManager {
 
     emptyCartConfig(){
         var emptyCardButton = $('[data-cart-remove-all]');
-        console.log('emptyCardButton:', emptyCardButton);
+        //console.log('emptyCardButton:', emptyCardButton);
+        if($('[data-cart-content] .cart-item').length > 0){
+            //console.log('Cart has items: ' + $('[data-cart-content] .cart-item').length);
+            $('.clear-cart-wrapper').removeAttr('style');
+        }
+
         emptyCardButton.on('click', (e) => {
             e.preventDefault();
             this.emptyCartItems();
