@@ -546,6 +546,8 @@ $card-preview-zoom-bottom-offset:       6rem;
 .previewCartWrapper {
     max-height: calc(100vh - #{$card-preview-zoom-bottom-offset});
     overflow: auto;
+        background-color: #fff;
+    border: container("border");;
 }
 
 .previewCartList {
