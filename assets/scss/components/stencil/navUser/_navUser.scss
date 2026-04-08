@@ -241,11 +241,20 @@
     position: absolute;
     top: 16px;
     right: 10px;
+    @include breakpoint("small"){
+
+    }
     @include breakpoint("medium"){
         position: relative;
-        top:0;
-        right:0;
+        top: 0;
+        right: 0;
+        min-width: 80px;
+        display: flex;
+        justify-content: flex-end;
     }
+     @include breakpoint("large"){
+        min-width: 250px;
+     }
    // removing cart link for small screens when quantity is 0
     &__hidden-s {
         @media (max-width: $screen-small) {
@@ -378,7 +387,7 @@
     display: inline-block;
     //margin: 0 remCalc(-12px);
     margin: -3px 0 0 0;
-    padding: 0 0;
+    padding: 0 0 0 spacing('half');
     position: relative;
     z-index: 1;
 }
