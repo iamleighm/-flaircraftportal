@@ -35,3 +35,25 @@
 {{/partial}}
 
 {{> layout/empty}}
+
+<script>
+    var orderCommentsInterval = setInterval(function() {
+        //console.log('orderCommentsInterval');
+        var orderCommentField = document.querySelector('input[name="orderComment"]');
+        if(orderCommentField){
+            clearInterval(orderCommentsInterval);
+            orderCommentField.removeAttribute('maxlength');
+            //console.log('orderCommentField', orderCommentField);
+        }
+    }, 1000);
+    var shippingTotalInterval = setInterval(function() {
+        //console.log('orderCommentsInterval');
+        var shippingTotalField = document.querySelector('#checkout-shipping-options .shippingOption-price');
+        if(shippingTotalField){
+            clearInterval(shippingTotalInterval);
+            if(shippingTotalField.textContent.indexOf('0.00') == 1){
+                document.querySelector('#checkout-shipping-options').style.display = 'none';
+            }
+        }
+    }, 1000);
+</script>
