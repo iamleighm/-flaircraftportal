@@ -278,14 +278,14 @@
         "submit_value": "Sign in",
         "forgot_password": "Forgot your password?",
         "new_customer": {
-            "heading": "New Customer?",
-            "intro": "Create an account with us and you'll be able to:",
-            "fact1": "Check out faster",
-            "fact2": "Save multiple shipping addresses",
-            "fact3": "Access your order history",
-            "fact4": "Track new orders",
-            "fact5": "Save items to your Wish List",
-            "create_account": "Create Account"
+            "heading": "Not a retailer yet?",
+            "intro": "Why become a Flaircraft retailer:",
+            "fact1": "Dedicated US-based sales rep.",
+            "fact2": "Full access to our retail portal",
+            "fact3": "Flexible fulfilment of orders",
+            "fact4": "Marketing & digital media pack",
+            "fact5": "Exclusive retailer events",
+            "create_account": "Become a Retailer"
         }
     },
     "reset_password": {

@@ -424,6 +424,10 @@ export default class QuickAddToCart {
             $qtyInput.prop('disabled', false);
             $incrementBtn.prop('disabled', false);
             $decrementBtn.prop('disabled', false);
+
+             if (response.data.instock == false) {
+                console.log('Product is out of stock');
+            }
             
             if (err) {
                 console.error('Error getting product attributes:', err);

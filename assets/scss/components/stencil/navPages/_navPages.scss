@@ -110,6 +110,7 @@
             &:has(.has-subMenu){
                 .navPage-subMenu{
                     display: block;
+                    border: 1px solid stencilColor("navUser-dropdown-borderColor");
                 }
             }
             .navPage-subMenu{
