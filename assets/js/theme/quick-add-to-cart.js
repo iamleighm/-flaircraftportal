@@ -38,7 +38,7 @@ export default class QuickAddToCart {
                     return;
                 }
                 
-                //console.log('Product attributes response for product', productId, ':', response);
+                console.log('Product attributes response for product', productId, ':', response);
                 
                 // Extract variant data from response
                 let allVariantData = '';
@@ -48,6 +48,13 @@ export default class QuickAddToCart {
                     allVariantData = response.variants;
                 } else if (response && response.data) {
                     allVariantData = response.data;
+                }
+
+                let stockLevel = 0;
+                card.setAttribute('data-stock-level', stockLevel);
+                if (response && response.data && response.data.stock) {
+                    stockLevel = response.data.stock;
+                    card.setAttribute('data-stock-level', stockLevel);
                 }
                 
                 //console.log('All variants details for product', productId, ':', allVariantData);

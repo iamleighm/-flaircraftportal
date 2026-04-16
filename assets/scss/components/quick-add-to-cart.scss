@@ -160,3 +160,26 @@
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+
+.card[data-stock-level="0"]{
+    .quick-add-to-cart{
+        opacity: 0.5;
+        pointer-events: none;
+        &:before{
+            content: 'Out of Stock';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #dc3545;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 1000;
+        }
+        .quick-qty-input-field{
+            display: none;
+        }
+    }
+}
