@@ -38,7 +38,7 @@ export default class QuickAddToCart {
                     return;
                 }
                 
-                console.log('Product attributes response for product', productId, ':', response);
+                //console.log('Product attributes response for product', productId, ':', response);
                 
                 // Extract variant data from response
                 let allVariantData = '';

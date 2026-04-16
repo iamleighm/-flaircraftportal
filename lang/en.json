@@ -196,8 +196,8 @@
             "alpha_asc": "A to Z",
             "alpha_desc": "Z to A",
             "reviews": "By Review",
-            "price_asc": "Price: Ascending",
-            "price_desc": "Price: Descending"
+            "price_asc": "Price: Lowest",
+            "price_desc": "Price: Highest"
         },
         "loading": "Loading",
         "month": "Month",
