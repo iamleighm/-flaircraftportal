@@ -9,8 +9,8 @@ export default class CategoryInfiniteScroll {
     }
 
     infinitConfig(){
-        var paginationWrapper = document.querySelector('nav.pagination');
-        if (paginationWrapper) {
+        if (document.querySelector('.paginationWrapper') && document.querySelector('nav.pagination')) {
+            var paginationWrapper = document.querySelector('nav.pagination');
             /* Config Local Pagination */
             var getCurrentPage = document.querySelector('.pagination-list .pagination-item--current .pagination-link').textContent;
             paginationWrapper.setAttribute('data-current-page', getCurrentPage);
