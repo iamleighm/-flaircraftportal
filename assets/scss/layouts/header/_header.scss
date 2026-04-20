@@ -66,9 +66,15 @@
     justify-content: space-between;
     width: 100%;
     &.container{
-        padding-top:30px;
-        padding-bottom:30px;
+        padding-top:10px;
+        padding-bottom:10px;
+        @include breakpoint("medium") {
+            padding-top:25px;
+            padding-bottom:25px;
+        }
     }
+
+
 }
 
 .header-logo {
