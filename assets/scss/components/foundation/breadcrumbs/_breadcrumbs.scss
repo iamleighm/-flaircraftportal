@@ -13,7 +13,15 @@
 // -----------------------------------------------------------------------------
 
 nav[aria-label="Breadcrumb"]{
-    display: none;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 101.42857rem;
+    display: flex;
+    padding: 0 2.42857rem;
+}
+
+#main-content:has(#product-listing-container) nav[aria-label="Breadcrumb"]{
+    display:none !important;
 }
 
 ol.breadcrumbs {

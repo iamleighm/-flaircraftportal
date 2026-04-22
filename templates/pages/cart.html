@@ -32,6 +32,7 @@ cart: true
 
             {{{region name="cart_below_totals"}}}
 
+            <div class="cart-actions-wrapper">
             {{#or customer (unless settings.hide_price_from_guests)}}
                 {{#if cart.show_primary_checkout_button}}
                     <div class="cart-actions cart-content-padding-right">
@@ -48,13 +49,15 @@ cart: true
                                 {{lang 'cart.preview.checkout_multiple'}}
                             </a>
                         {{/if}}
+                        <a class="button continue-shopping" href="/" >Continue Shopping</a>
                     </div>
                 {{else}}
                     <div class="cart-actions cart-content-padding-right">
                         <a class="button" href="{{urls.home}}" title="{{lang 'cart.continue_shopping'}}">{{lang 'cart.continue_shopping'}}</a>
+                        <a class="button continue-shopping" href="/" >Continue Shopping</a>
                     </div>
                 {{/if}}
-
+                </div>
                 {{#if cart.additional_checkout_buttons}}
                     <div data-cart-additional-checkout-buttons class="cart-additionalCheckoutButtons cart-content-padding-right">
                         {{> components/cart/additional-checkout-buttons}}
@@ -63,6 +66,7 @@ cart: true
             {{else}}
                 <div class="cart-actions cart-content-padding-right">
                     <a class="button" href="{{urls.auth.login}}" title="{{lang 'cart.login_to_checkout'}}">{{lang 'cart.login_to_checkout'}}</a>
+                    <a class="button continue-shopping" href="/" >Continue Shopping</a>
                 </div>
             {{/or}}
 

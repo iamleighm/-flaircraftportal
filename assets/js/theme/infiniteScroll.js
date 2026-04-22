@@ -9,7 +9,7 @@ export default class CategoryInfiniteScroll {
     }
 
     infinitConfig(){
-        if (document.querySelector('.paginationWrapper') && document.querySelector('nav.pagination')) {
+        if (document.querySelector('.pagination-list') && document.querySelector('nav.pagination')) {
             var paginationWrapper = document.querySelector('nav.pagination');
             /* Config Local Pagination */
             var getCurrentPage = document.querySelector('.pagination-list .pagination-item--current .pagination-link').textContent;
@@ -24,7 +24,7 @@ export default class CategoryInfiniteScroll {
                 var topYPoint = window.scrollY;
 
                 if (topYPoint > getTriggerPoint) {
-                    //console.log('Infinite scroll trigger point reached');
+                    console.log('Infinite scroll trigger point reached');
                     var paginationWrapper = document.querySelector('nav.pagination');
                     var getCurrentPage = paginationWrapper.getAttribute('data-current-page');
                     var lastPage = paginationWrapper.querySelector('.pagination-list .pagination-item:nth-last-child(2) .pagination-link').textContent;

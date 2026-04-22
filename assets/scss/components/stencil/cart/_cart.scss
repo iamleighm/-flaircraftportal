@@ -506,6 +506,12 @@ $card-preview-zoom-bottom-offset:       6rem;
     margin-bottom:10px;
 }
 
+.cart-actions-wrapper{
+   .continue-shopping{
+    margin-right: 10px
+   }
+}
+
 .cart-actions {
     @include clearfix;
     clear: both;
