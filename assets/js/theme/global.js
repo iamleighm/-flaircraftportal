@@ -89,9 +89,9 @@ export default class Global extends PageManager {
             const storeHash = $('meta[name="store-hash"]').attr('content') || 'default';
             const channelId = $('meta[name="channel-id"]').attr('content') || '1';
             
-            console.log('🔍 Using customerId:', customerId);
-            console.log('🔍 Using storeHash:', storeHash);
-            console.log('🔍 Using channelId:', channelId);
+            //console.log('🔍 Using customerId:', customerId);
+            //console.log('🔍 Using storeHash:', storeHash);
+            //console.log('🔍 Using channelId:', channelId);
             
             let response = await fetch('https://api-b2b.bigcommerce.com/api/v2/login', {
                 method: 'POST',
@@ -165,7 +165,7 @@ export default class Global extends PageManager {
                 return null;
             }
             
-            console.log("User ID:"+userId)
+            //console.log("User ID:"+userId)
             const authToken = await this.getB2BToken();
             let response = await fetch(`https://api-b2b.bigcommerce.com/api/v2/customers/${userId}/companies`, {
                 method: 'GET',
@@ -176,7 +176,7 @@ export default class Global extends PageManager {
             });
             
             const companyData = await response.json();
-            console.log("🏢 B2B Company Data:", companyData);
+            //console.log("🏢 B2B Company Data:", companyData);
             
             return companyData;
 
@@ -186,50 +186,92 @@ export default class Global extends PageManager {
         }
     }
 
+    async getMasqueradeOfUser() {
+        try {
+            const userId = await this.getB3UserId();
+            const customerId = $('meta[name="customer-id"]').attr('content');
+
+            if(userId === null){
+                console.log("Didn't receive a B2B User ID, most likely B2C user..");
+                return null;
+            }
+            
+            //console.log("User ID:"+userId)
+            const authToken = await this.getB2BToken();
+            let response = await fetch(`https://api-b2b.bigcommerce.com/api/v2/sales-reps/${userId}/companies/masquerading`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authToken': authToken.data.token
+                }
+            });
+            
+            const companyData = await response.json();
+            //console.log("🏢 B2B Masquerade Data:", companyData);
+            
+            return companyData;
+
+        } catch(error) {
+            console.error("❌ Error in getMasqueradeOfUser:", error);
+            return null;
+        }
+    }
+
     async checkAndSwitchCurrency() {
 
         const userEmail = sessionStorage.getItem('sessionUserEmail');
-        console.log('🔍 Checking currency switch for user:', userEmail);
+        //console.log('🔍 Checking currency switch for user:', userEmail);
         
         if (!userEmail) {
-            console.log('ℹ️ No user email in sessionStorage, skipping currency switch');
+            //console.log('ℹ️ No user email in sessionStorage, skipping currency switch');
             return;
         }
 
-        // Remove sessionStorage item immediately when email is found
-        sessionStorage.removeItem('sessionUserEmail');
-        console.log('🧹 Removed sessionUserEmail from sessionStorage');
-
         // Get current storefront currency from DOM
         const currentCurrency = $('meta[name="active-currency-id"]').attr('content');
-        console.log('💱 Current Storefront Currency:', currentCurrency);
+        //console.log('💱 Current Storefront Currency:', currentCurrency);
         
         // Get user's company currency from B2B API
-        console.log('🏢 Fetching company currency...');
-        const companyData = await this.getCompaniesOfUser();
-        
+        //console.log('🏢 Fetching company currency...');
+        var companyData = await this.getCompaniesOfUser();
+
+        //console.log('🏢 Company Data:', companyData);
+        //console.log('🏢 Company Masquerade Data:', companyMasqueradeData);
+
+        if(companyData.message === 'USER ROLE ERROR'){
+            //console.log('⚠️ User role error, using customer group logic');
+            const companyMasqueradeData = await this.getMasqueradeOfUser();
+            companyData = companyMasqueradeData;
+        }
+        else{
+            // Remove sessionStorage item immediately if user logged in directly.
+            sessionStorage.removeItem('sessionUserEmail');
+            //console.log('🧹 Removed sessionUserEmail from sessionStorage');
+        }
+
         if (companyData && companyData.data && companyData.data.extraFields && companyData.data.extraFields.length > 0) {
             const userCurrency = companyData.data.extraFields[0].fieldValue;
-            console.log('💰 User Company Currency:', userCurrency);
+            //console.log('💰 User Company Currency:', userCurrency);
             
             // Check if user's currency matches storefront currency
             if (userCurrency && userCurrency.toUpperCase() !== currentCurrency?.toUpperCase()) {
-                console.log(`🔄 Currency mismatch: User (${userCurrency}) != Storefront (${currentCurrency})`);
-                console.log(`💱 Switching to user's preferred currency: ${userCurrency}`);
+                //console.log(`🔄 Currency mismatch: User (${userCurrency}) != Storefront (${currentCurrency})`);
+                //console.log(`💱 Switching to user's preferred currency: ${userCurrency}`);
                 this.switchToCurrency(userCurrency.toUpperCase());
             } else {
                 console.log('✅ User currency matches storefront currency - no switch needed');
             }
-        } else {
-            console.log('⚠️ No company currency found, using customer group logic');
+        } 
+        else {
+            //console.log('⚠️ No company currency found, using customer group logic');
             
             // Fallback to customer group logic
             const customerGroupId = $('meta[name="customer-group-id"]').attr('content');
-            console.log('👥 Customer Group ID:', customerGroupId);
+            //console.log('👥 Customer Group ID:', customerGroupId);
             
             if (this.shouldUseUSD(customerGroupId, userEmail)) {
                 if (currentCurrency !== 'USD') {
-                    console.log('🔄 Switching to USD based on customer group...');
+                    //console.log('🔄 Switching to USD based on customer group...');
                     this.switchToCurrency('USD');
                 } else {
                     console.log('✅ Already using USD');
@@ -249,13 +291,13 @@ export default class Global extends PageManager {
         
         // Example: Customer group 2 should use USD
         if (customerGroupId === '2') {
-            console.log('💵 Customer group 2 should use USD');
+            //console.log('💵 Customer group 2 should use USD');
             return true;
         }
         
         // Example: Specific email should use USD
         if (userEmail === 'maverik_90@hotmail.com') {
-            console.log('💵 Specific user should use USD');
+            //console.log('💵 Specific user should use USD');
             return true;
         }
         
@@ -271,15 +313,15 @@ export default class Global extends PageManager {
     }
 
     switchToCurrency(currencyCode) {
-        console.log(`� Switching to currency: ${currencyCode}`);
+        //console.log(`� Switching to currency: ${currencyCode}`);
         
         // get active currency
         const activeCurrencyId = $('meta[name=active-currency-id]').attr('content');
         const activeCurrencyName = $(`a[href*="setCurrencyId=${activeCurrencyId}"]`).attr('data-currency-code');
-        console.log('Active Currency Name:', activeCurrencyName);
+        //console.log('Active Currency Name:', activeCurrencyName);
         
         if(activeCurrencyName === currencyCode){
-            console.log('Active currency is already ' + currencyCode);
+            //console.log('Active currency is already ' + currencyCode);
             return;
         }
         // Find currency link for the specified currency
@@ -290,7 +332,7 @@ export default class Global extends PageManager {
             const directUrl = currencyLink.attr('href');
             
             if (directUrl && directUrl !== '#') {
-                console.log(`🔄 Using direct URL redirect to ${currencyCode}...`);
+                //console.log(`🔄 Using direct URL redirect to ${currencyCode}...`);
                 window.location.href = directUrl;
                 return;
             }
@@ -298,7 +340,7 @@ export default class Global extends PageManager {
             // Fall back to form submission
             const switchUrl = currencyLink.data('cart-currency-switch-url');
             if (switchUrl) {
-                console.log(`📤 Using form submission for ${currencyCode}...`);
+                //console.log(`📤 Using form submission for ${currencyCode}...`);
                 
                 const form = document.createElement('form');
                 form.method = 'POST';
@@ -350,7 +392,7 @@ export default class Global extends PageManager {
             // Inject script into iframe
             try {
                 bundleIframe.contentDocument.body.appendChild(script);
-                console.log('✅ Script injected into B2B iframe');
+                //console.log('✅ Script injected into B2B iframe');
             } catch (error) {
                 console.log('❌ Could not inject script into B2B iframe:', error);
             }
