@@ -34,3 +34,20 @@
 {{/partial}}
 
 {{> layout/empty}}
+
+
+<script>
+    var orderCommentsInterval1 = setInterval(function() {
+        //console.log('orderCommentsInterval');
+        var orderCommentField = document.querySelector('input[name="orderComment"]');
+        if(orderCommentField && !orderCommentField.classList.contains('fc-config-done')){
+            clearInterval(orderCommentsInterval1);
+            
+
+            //console.log('orderCommentField', orderCommentField);
+        }
+        clearInterval(orderCommentsInterval1);
+
+    }, 1000);
+
+</script>

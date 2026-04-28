@@ -40,8 +40,9 @@
     var orderCommentsInterval = setInterval(function() {
         //console.log('orderCommentsInterval');
         var orderCommentField = document.querySelector('input[name="orderComment"]');
-        if(orderCommentField){
-            clearInterval(orderCommentsInterval);
+        if(orderCommentField && !orderCommentField.classList.contains('fc-config-done')){
+            //clearInterval(orderCommentsInterval);
+            orderCommentField.classList.add('fc-config-done');
             orderCommentField.removeAttribute('maxlength');
 
             document.querySelector('[data-test="checkout-shipping-comments"] .form-legend').textContent = 'Order Comments (e.g. Ref #)';

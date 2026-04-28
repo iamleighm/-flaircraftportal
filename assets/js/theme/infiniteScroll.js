@@ -9,6 +9,7 @@ export default class CategoryInfiniteScroll {
     }
 
     infinitConfig(){
+        //console.log('infinitConfig called');
         if (document.querySelector('.pagination-list') && document.querySelector('nav.pagination')) {
             var paginationWrapper = document.querySelector('nav.pagination');
             /* Config Local Pagination */
@@ -24,13 +25,14 @@ export default class CategoryInfiniteScroll {
                 var topYPoint = window.scrollY;
 
                 if (topYPoint > getTriggerPoint) {
-                    console.log('Infinite scroll trigger point reached');
+                    //console.log('Infinite scroll trigger point reached');
                     var paginationWrapper = document.querySelector('nav.pagination');
                     var getCurrentPage = paginationWrapper.getAttribute('data-current-page');
                     var lastPage = paginationWrapper.querySelector('.pagination-list .pagination-item:nth-last-child(2) .pagination-link').textContent;
-
+                    //console.log('getCurrentPage: '+ getCurrentPage);
+                    //console.log('paginationWrapper: '+ paginationWrapper);
                     var getNextPage = parseInt(getCurrentPage) + 1;
-
+                    //console.log('getNextPage <= lastPage: '+ getNextPage + "<=" +lastPage);
                     if(getNextPage <= lastPage){
                         /* Add Loader */
                         var productGrid = document.querySelector('#product-listing-container .productGrid');
@@ -38,8 +40,8 @@ export default class CategoryInfiniteScroll {
                             productGrid.classList.add('loading');
 
                             var getCurrentLocation = location.href;
-                            console.log('Current location:', getCurrentLocation);
-                            console.log('Next page:', getNextPage);
+                            //console.log('Current location:', getCurrentLocation);
+                            //console.log('Next page:', getNextPage);
                             
                             // Remove any existing page parameter from URL
                             var baseUrl = getCurrentLocation.split('?')[0];
@@ -54,7 +56,7 @@ export default class CategoryInfiniteScroll {
                                     newTargetLocation += '&' + params.join('&');
                                 }
                             }
-                            console.log('New target location:', newTargetLocation);
+                            //console.log('New target location:', newTargetLocation);
                             this.getProductGrid(getNextPage, newTargetLocation);
                         }
                     }

@@ -4,12 +4,14 @@ import compareProducts from './global/compare-products';
 import FacetedSearch from './common/faceted-search';
 import { createTranslationDictionary } from './common/utils/translations-utils';
 import QuickAddToCart from './quick-add-to-cart';
+import CategoryInfiniteScroll from './infiniteScroll';
 
 export default class Category extends CatalogPage {
     constructor(context) {
         super(context);
         this.validationDictionary = createTranslationDictionary(context);
         this.quickAddToCart = new QuickAddToCart();
+        this.categoryInfiniteScroll = new CategoryInfiniteScroll();
     }
 
     setLiveRegionAttributes($element, roleType, ariaLiveStatus) {
@@ -108,6 +110,7 @@ export default class Category extends CatalogPage {
             // Reinitialize QuickAddToCart when filters are applied
             this.quickAddToCart.updateQuantitiesFromCart();
             this.quickAddToCart.processAllCards();
+            this.categoryInfiniteScroll.init();
         }, {
             validationErrorMessages: {
                 onMinPriceError,
