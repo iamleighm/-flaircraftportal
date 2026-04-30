@@ -37,17 +37,14 @@
 
 
 <script>
-    var orderCommentsInterval1 = setInterval(function() {
+    var orderConfirmationInterval1 = setInterval(function() {
         //console.log('orderCommentsInterval');
-        var orderCommentField = document.querySelector('input[name="orderComment"]');
-        if(orderCommentField && !orderCommentField.classList.contains('fc-config-done')){
-            clearInterval(orderCommentsInterval1);
-            
-
-            //console.log('orderCommentField', orderCommentField);
+        var orderConfirmationText = document.querySelector('.orderConfirmation [data-test="order-confirmation-order-status-text"]');
+        if(orderConfirmationText && !orderConfirmationText.classList.contains('fc-config-done')){
+            clearInterval(orderConfirmationInterval1);
+            orderConfirmationText.classList.add('fc-config-done');
+            orderConfirmationText.textContent = 'Your order has been received and is now being processed. A confirmation email with the details has been sent to you.';
         }
-        clearInterval(orderCommentsInterval1);
-
-    }, 1000);
+    });
 
 </script>

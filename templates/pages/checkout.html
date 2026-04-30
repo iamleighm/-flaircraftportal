@@ -48,6 +48,7 @@
             document.querySelector('[data-test="checkout-shipping-comments"] .form-legend').textContent = 'Order Comments (e.g. Ref #)';
             document.querySelector('label[for="orderComment"]').textContent = 'Order Comments (e.g. Ref #)';
 
+            /*
             const newTag = document.createElement("textarea");
             newTag.value = orderCommentField.value;
             newTag.setAttribute('name', 'orderComment');
@@ -57,19 +58,20 @@
             newTag.setAttribute('rows','4');
             newTag.setAttribute('columns','50');
             orderCommentField.parentNode.replaceChild(newTag, orderCommentField);
+            */
             
 
             //console.log('orderCommentField', orderCommentField);
         }
-    }, 1000);
+    }, 500);
     var shippingTotalInterval = setInterval(function() {
         //console.log('orderCommentsInterval');
         var shippingTotalField = document.querySelector('#checkout-shipping-options .shippingOption-price');
         if(shippingTotalField){
-            clearInterval(shippingTotalInterval);
+            //clearInterval(shippingTotalInterval);
             if(shippingTotalField.textContent.indexOf('0.00') == 1){
                 document.querySelector('#checkout-shipping-options').style.display = 'none';
             }
         }
-    }, 1000);
+    }, 500);
 </script>

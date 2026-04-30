@@ -73,11 +73,17 @@ export default class CategoryInfiniteScroll {
         .then(html => {
             const parser = new DOMParser()
         
-            const doc = parser.parseFromString(html, "text/html")
-            var getSourceProductGrid = doc.querySelector('#product-listing-container .productGrid').innerHTML
+            const externalDoc = parser.parseFromString(html, "text/html")
+            var getSourceProductGrid = externalDoc.querySelector('#product-listing-container .productGrid').innerHTML
 
             var productGrid = document.querySelector('#product-listing-container .productGrid');
+            //console.log(externalDoc.querySelector('#product-listing-container nav.pagination'));
             productGrid.insertAdjacentHTML('beforeend', getSourceProductGrid);
+
+            /* Update Last page */
+            var getlastPage = externalDoc.querySelector('.pagination-list .pagination-item:nth-last-child(2) .pagination-link').textContent;
+            var localPagination = document.querySelector('.pagination-list .pagination-item:nth-last-child(2) .pagination-link')
+            localPagination.textContent = getlastPage;
 
             setTimeout(function(){
                 /* Update Local Pagination */

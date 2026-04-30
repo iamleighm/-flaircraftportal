@@ -31,69 +31,72 @@ export default class QuickAddToCart {
             
             // Use utils.api.productAttributes.optionChange to get product info
             const formData = '';
-            
-            utils.api.productAttributes.optionChange(productId, formData, (err, response) => {
-                if (err) {
-                    console.error('Error getting product attributes for product', productId, ':', err);
-                    return;
-                }
-                
-                //console.log('Product attributes response for product', productId, ':', response);
-                
-                // Extract variant data from response
-                let allVariantData = '';
-                if (response && response.data && response.data.variants) {
-                    allVariantData = response.data.variants;
-                } else if (response && response.variants) {
-                    allVariantData = response.variants;
-                } else if (response && response.data) {
-                    allVariantData = response.data;
-                }
+            if(!card.classList.contains('data-customized')){
+                card.classList.add('data-customized');
+                utils.api.productAttributes.optionChange(productId, formData, (err, response) => {
+                    if (err) {
+                        console.error('Error getting product attributes for product', productId, ':', err);
+                        return;
+                    }
+                    
+                    //console.log('Product attributes response for product', productId, ':', response);
+                    
+                    // Extract variant data from response
+                    let allVariantData = '';
+                    if (response && response.data && response.data.variants) {
+                        allVariantData = response.data.variants;
+                    } else if (response && response.variants) {
+                        allVariantData = response.variants;
+                    } else if (response && response.data) {
+                        allVariantData = response.data;
+                    }
 
-                let stockLevel = 0;
-                card.setAttribute('data-stock-level', stockLevel);
-                if (response && response.data && response.data.stock) {
-                    stockLevel = response.data.stock;
+                    let stockLevel = 0;
                     card.setAttribute('data-stock-level', stockLevel);
-                }
-                
-                //console.log('All variants details for product', productId, ':', allVariantData);
-                
-                // Store variant data on the card
-                if (allVariantData) {
-                    card.setAttribute('data-variants', JSON.stringify(allVariantData));
-                }
-                
-                // Extract SKU from first variant
-                let sku = '';
-                if (allVariantData && allVariantData.length > 0) {
-                    sku = allVariantData[0].sku || '';
-                } else if (response && response.data && response.data.sku) {
-                    sku = response.data.sku;
-                } else if (response && response.sku) {
-                    sku = response.sku;
-                }
+                    if (response && response.data && response.data.stock) {
+                        stockLevel = response.data.stock;
+                        card.setAttribute('data-stock-level', stockLevel);
+                    }
+                    
+                    //console.log('All variants details for product', productId, ':', allVariantData);
+                    
+                    // Store variant data on the card
+                    if (allVariantData) {
+                        //card.setAttribute('data-variants', JSON.stringify(allVariantData));
+                    }
+                    
+                    // Extract SKU from first variant
+                    let sku = '';
+                    if (allVariantData && allVariantData.length > 0) {
+                        sku = allVariantData[0].sku || '';
+                    } else if (response && response.data && response.data.sku) {
+                        sku = response.data.sku;
+                    } else if (response && response.sku) {
+                        sku = response.sku;
+                    }
 
-                let v3_variant_id = '';
-                if(allVariantData && allVariantData.v3_variant_id){
-                    v3_variant_id = allVariantData.v3_variant_id;
-                }
-                
-                //console.log('Extracted SKU for product', productId, ':', sku);
-                //console.log('productId: ', productId);
-                //console.log('v3_variant_id: ', v3_variant_id);
-                card.querySelector('[data-test-info-type="brandName"]').append(' - ',sku);
+                    let v3_variant_id = '';
+                    if(allVariantData && allVariantData.v3_variant_id){
+                        v3_variant_id = allVariantData.v3_variant_id;
+                    }
+                    
+                    //console.log('Extracted SKU for product', productId, ':', sku);
+                    //console.log('productId: ', productId);
+                    //console.log('v3_variant_id: ', v3_variant_id);
+                    card.querySelector('[data-test-info-type="brandName"]').append(' - ',sku);
 
-                // Store first variant SKU on the card
-                if (v3_variant_id) {
-                    card.setAttribute('data-v3_variant_id', v3_variant_id);
-                }
+                    // Store first variant SKU on the card
+                    if (v3_variant_id) {
+                        card.setAttribute('data-v3_variant_id', v3_variant_id);
+                    }
 
-                // Store first variant SKU on the card
-                if (sku) {
-                    card.setAttribute('data-first-variant-sku', sku);
-                }
-            });
+                    // Store first variant SKU on the card
+                    if (sku) {
+                        card.setAttribute('data-first-variant-sku', sku);
+                    }
+                });
+            }
+
         });
     }
 
