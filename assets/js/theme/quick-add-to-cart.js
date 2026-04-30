@@ -201,8 +201,8 @@ export default class QuickAddToCart {
                 getCartItems = response;
             }
 
-            console.log('getCartItems:', getCartItems);
-            console.log('Cart response:', response);
+            //console.log('getCartItems:', getCartItems);
+            //console.log('Cart response:', response);
             
             if (getCartItems.length === 0) {
                 console.log('No items in cart');
@@ -211,7 +211,7 @@ export default class QuickAddToCart {
             
             // Process items sequentially with await
             for (const item of getCartItems) {
-                console.log('Processing item:', item);
+                //console.log('Processing item:', item);
 
                 const productId = item.productId;
                 const quantity = item.quantity;
@@ -225,7 +225,7 @@ export default class QuickAddToCart {
                 }
             }
             
-            console.log('All quantities updated');
+            //console.log('All quantities updated');
         });
     }
 

@@ -8,11 +8,16 @@ import Url from 'url';
 import collapsibleFactory from './common/collapsible';
 import 'jstree';
 import nod from './common/nod';
+import QuickAddToCart from './quick-add-to-cart';
 
 const leftArrowKey = 37;
 const rightArrowKey = 39;
 
 export default class Search extends CatalogPage {
+     constructor(context) {
+        super(context);
+        this.quickAddToCart = new QuickAddToCart();
+    }
     formatCategoryTreeForJSTree(node) {
         const nodeData = {
             text: node.data,
@@ -213,6 +218,9 @@ export default class Search extends CatalogPage {
             .prependTo('body');
 
         setTimeout(() => $searchResultsMessage.trigger('focus'), 100);
+
+        this.quickAddToCart.updateQuantitiesFromCart();
+        this.quickAddToCart.processAllCards();
     }
 
     loadTreeNodes(node, cb) {
