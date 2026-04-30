@@ -47,6 +47,16 @@
         </div>
 
         <div class="navUser-item navUser-item--cart">
+            {{#if customer}}
+            <span class="navUser-action-myaccount">
+                <a class="navUser-action"
+                    href="{{urls.account.index}}"
+                    aria-label="{{lang 'common.account'}}"
+                >
+                    {{lang 'common.account'}}
+                </a>
+            </span>
+            {{/if}}
             <a class="navUser-action"
             data-cart-preview
             data-dropdown="cart-preview-dropdown"

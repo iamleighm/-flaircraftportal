@@ -217,7 +217,7 @@
         display: none;
         @include breakpoint("medium") {
             display: flex !important;
-            min-width: 155px;
+            min-width: auto;
         }
         .navUser-action{
             color: stencilColor("navUser-topbar-color");

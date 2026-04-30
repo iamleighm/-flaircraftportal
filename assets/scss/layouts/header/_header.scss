@@ -77,6 +77,15 @@
 
 }
 
+
+.navUser-action-myaccount{
+    display: none;
+    align-items: center;
+    @include breakpoint("medium"){
+        display: flex;
+    }
+}
+
 .header-logo {
     font-size: 0;   // 1
     height: 30px;
