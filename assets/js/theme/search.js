@@ -9,6 +9,7 @@ import collapsibleFactory from './common/collapsible';
 import 'jstree';
 import nod from './common/nod';
 import QuickAddToCart from './quick-add-to-cart';
+import InfiniteScroll from './infiniteScroll';
 
 const leftArrowKey = 37;
 const rightArrowKey = 39;
@@ -17,6 +18,7 @@ export default class Search extends CatalogPage {
      constructor(context) {
         super(context);
         this.quickAddToCart = new QuickAddToCart();
+        this.infiniteScroll = new InfiniteScroll();
     }
     formatCategoryTreeForJSTree(node) {
         const nodeData = {
@@ -218,9 +220,6 @@ export default class Search extends CatalogPage {
             .prependTo('body');
 
         setTimeout(() => $searchResultsMessage.trigger('focus'), 100);
-
-        this.quickAddToCart.updateQuantitiesFromCart();
-        this.quickAddToCart.processAllCards();
     }
 
     loadTreeNodes(node, cb) {
@@ -318,6 +317,11 @@ export default class Search extends CatalogPage {
             $('html, body').animate({
                 scrollTop: 0,
             }, 100);
+
+            this.quickAddToCart.updateQuantitiesFromCart();
+            this.quickAddToCart.processAllCards();
+            this.categoryInfiniteScroll.init();
+
         }, {
             validationErrorMessages: {
                 onMinPriceError,

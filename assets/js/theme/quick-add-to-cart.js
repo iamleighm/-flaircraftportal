@@ -471,24 +471,32 @@ export default class QuickAddToCart {
 
     updateCartCount() {
         // Update cart count natively using BigCommerce's cart API
+        console.log('Updating cart count...');
         utils.api.cart.getCart({}, (err, response) => {
             if (err) {
                 console.error('Error getting cart for count update:', err);
                 return;
             }
-            
+            //console.log('cart response: ', response);
+            //console.log('cart response.lineItems.physicalItems: ', response.lineItems.physicalItems);
+
             // Calculate total quantity from cart items
             let totalQuantity = 0;
-            if (response && Array.isArray(response)) {
-                response.forEach(item => {
-                    totalQuantity += item.quantity || 0;
+            if (response && Array.isArray(response.lineItems.physicalItems)) {
+                var itemsList = response.lineItems.physicalItems;
+                //console.log('itemsList: ', itemsList);
+                itemsList.forEach(item => {
+                    //console.log('item: ' , item);
+                    totalQuantity += item.quantity;
                 });
             }
+            //console.log('totalQuantity:', totalQuantity);
             
             // Update cart count elements
-            const $cartCount = $('.cart-count');
+            const $cartCount = $('.countPill.cart-quantity');
             if ($cartCount.length > 0) {
                 $cartCount.text(totalQuantity);
+                $cartCount.addClass('countPill--positive');
             }
             
             // Also update any other cart count indicators
