@@ -164,7 +164,7 @@
 
 .card[data-stock-level="0"]{
     .quick-add-to-cart{
-        opacity: 0.5;
+        opacity: 1;
         pointer-events: none;
         &:before{
             content: 'Out of Stock';
@@ -180,6 +180,12 @@
         }
         .quick-qty-input-field{
             display: none;
+        }
+        .quick-decrement{
+            opacity: 0;
+        }
+        .quick-increment{
+            opacity: 0;
         }
     }
 }
